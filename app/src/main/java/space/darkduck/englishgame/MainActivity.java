@@ -11,15 +11,17 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnFragmentListener {
 
     FloatingActionButton addButton, playButton;
     MyDatabaseHelper myDB;
+    TextView text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        text=findViewById(R.id.textViewTest);
 
         addButton = findViewById(R.id.addButton);
         addButton.setOnClickListener((v) -> {
@@ -35,15 +37,22 @@ public class MainActivity extends AppCompatActivity {
             ft.commit();
         });
         myDB = new MyDatabaseHelper(MainActivity.this);
-        Cursor cursor = myDB.GetRusWord("cat");
+
+    }
+
+    @Override
+    public void OnSendData(String data) {
+        Cursor cursor = myDB.GetRusWord(data);
         if (cursor.moveToFirst()) {
             String str;
             do {
                 str = "";
                 for (String cn : cursor.getColumnNames()) {
                     str = str.concat(cursor.getString(cursor.getColumnIndex(cn)));
+                    text.setText(str);
                 }
             } while (cursor.moveToNext());
         }
+
     }
 }
