@@ -35,11 +35,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
         playButton.setOnClickListener((v) -> {
             LevelOneFragment fragment = new LevelOneFragment();
             Cursor cursor=myDB.GetEngWord(1);
+            text.setText(GetStringFromCursor(cursor));
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            myDB.Update("cat",0);
             ft.replace(R.id.containerFL, fragment);
             ft.commit();
-            text.setText(GetStringFromCursor(cursor));
-            fragment.SetText(GetStringFromCursor(cursor));
         });
     }
 

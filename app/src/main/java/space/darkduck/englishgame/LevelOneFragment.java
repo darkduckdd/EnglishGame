@@ -17,11 +17,6 @@ public class LevelOneFragment extends Fragment {
 
     TextView textView;
     private OnFragmentListener fragmentSendDataListener;
-    public void SetText(String text){
-        if(textView!=null){
-            textView.setText(text);
-        }
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

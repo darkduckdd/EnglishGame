@@ -40,23 +40,29 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    Cursor GetRusWord(String word){
+    public Cursor GetRusWord(String word){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor=db.rawQuery("select RussianWord from Dictionary where EnglishWord = ?",new String[]{word});
         return cursor;
     }
 
-    Cursor GetEngWord(String word){
+    public Cursor GetEngWord(String word){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor=db.rawQuery("select EnglishWord from Dictionary where RussianWord = ?",new String[]{word});
         return cursor;
     }
 
-    Cursor GetEngWord(int id){
+    public Cursor GetEngWord(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor=db.rawQuery("select EnglishWord from Dictionary where Id = ?",new String[]{String.valueOf(id)});
         return cursor;
     }
+     public void Update(String word,int value ){
+         SQLiteDatabase db = this.getWritableDatabase();
+         ContentValues cv = new ContentValues();
+         cv.put(columnProgress,value);
+         db.update(tableName, cv, columnEngWord + "=?", new String[] { word });
+     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
