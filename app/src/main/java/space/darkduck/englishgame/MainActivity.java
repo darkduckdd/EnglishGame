@@ -34,10 +34,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
         playButton = findViewById(R.id.playButton);
         playButton.setOnClickListener((v) -> {
             LevelOneFragment fragment = new LevelOneFragment();
-            Cursor cursor=myDB.GetEngWord(1);
-            text.setText(GetStringFromCursor(cursor));
+            //Cursor cursor=myDB.GetEngWord(1);
+            //text.setText(GetStringFromCursor(cursor));
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            myDB.Update("cat",0);
+            //myDB.Update("cat",0);
             ft.replace(R.id.containerFL, fragment);
             ft.commit();
         });
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
                 for (String cn : cursor.getColumnNames()) {
                     str = str.concat(cursor.getString(cursor.getColumnIndex(cn)));
                     text.setText(str);
+                    //todo
                 }
             } while (cursor.moveToNext());
         }
