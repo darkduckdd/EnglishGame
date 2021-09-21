@@ -1,6 +1,7 @@
 package space.darkduck.englishgame;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        myDB = new MyDatabaseHelper(MainActivity.this);
         text=findViewById(R.id.textViewTest);
 
         addButton = findViewById(R.id.addButton);
@@ -32,12 +34,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
         playButton = findViewById(R.id.playButton);
         playButton.setOnClickListener((v) -> {
             LevelOneFragment fragment = new LevelOneFragment();
+            Cursor cursor=myDB.GetEngWord(1);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.containerFL, fragment);
             ft.commit();
+            text.setText(GetStringFromCursor(cursor));
+            fragment.SetText(GetStringFromCursor(cursor));
         });
-        myDB = new MyDatabaseHelper(MainActivity.this);
-
     }
 
     @Override
@@ -53,6 +56,18 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
                 }
             } while (cursor.moveToNext());
         }
+    }
 
+    private String GetStringFromCursor(Cursor cursor){
+        if (cursor.moveToFirst()) {
+            String str;
+            do {
+                str = "";
+                for (String cn : cursor.getColumnNames()) {
+                    return str = str.concat(cursor.getString(cursor.getColumnIndex(cn)));
+                }
+            } while (cursor.moveToNext());
+        }
+        return null;
     }
 }

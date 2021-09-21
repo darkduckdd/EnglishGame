@@ -46,6 +46,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    Cursor GetEngWord(String word){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor=db.rawQuery("select EnglishWord from Dictionary where RussianWord = ?",new String[]{word});
+        return cursor;
+    }
+
+    Cursor GetEngWord(int id){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor=db.rawQuery("select EnglishWord from Dictionary where Id = ?",new String[]{String.valueOf(id)});
+        return cursor;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + tableName + " (" + columnId + " INTEGER PRIMARY KEY AUTOINCREMENT, "

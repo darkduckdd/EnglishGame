@@ -15,7 +15,13 @@ import android.widget.TextView;
 
 public class LevelOneFragment extends Fragment {
 
+    TextView textView;
     private OnFragmentListener fragmentSendDataListener;
+    public void SetText(String text){
+        if(textView!=null){
+            textView.setText(text);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -36,7 +42,7 @@ public class LevelOneFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level_one, container, false);
         Button rightButton, mistakeButton;
-        TextView textView = view.findViewById(R.id.text);
+         textView = view.findViewById(R.id.text);
 
         rightButton = view.findViewById(R.id.rightButton);
         rightButton.setOnClickListener((v) -> {
