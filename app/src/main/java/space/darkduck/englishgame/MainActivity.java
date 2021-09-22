@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Debug;
 import android.util.Log;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
     private LevelOneFragment fragmentLevelOne;
     private LevelTwoFragment fragmentLevelTwo;
     private LevelThreeFragment fragmentLevelThree;
-    private int currentWordPosition = 5;
+    private int currentWordPosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
         myDB = new MyDatabaseHelper(MainActivity.this);
         GetEngWordsAndSaveInArray(myDB, levelEngWords);
         GetRusWordsAndSaveInArray(myDB, levelEngWords, levelRusWords);
-        //levelRusWords.add("идти");
         addButton.setOnClickListener((v) -> {
             Intent intent = new Intent(MainActivity.this, AddActivity.class);
             startActivity(intent);
@@ -110,6 +110,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
             case "FailLevelTwo":
                 ChangeFragment(0,fragmentLevelOne);
                 break;
+            case  "SuccessLevelThree":
+                ChangeFragment(3,fragmentLevelOne);
+                CheckEnd();
+                break;
+            case "FailLevelThree":
+                ChangeFragment(1,fragmentLevelTwo);
+                break;
         }
     }
 
@@ -124,5 +131,13 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
         for (String str : engWords) {
             rusWords.add(GetStringFromCursor(myDB.GetRusWord(str)));
         }
+    }
+    private void CheckEnd(){
+       /* currentWordPosition++;
+        if(currentWordPosition>=levelEngWords.size()){
+            currentWordPosition=0;
+            Intent intent = new Intent(MainActivity.this, AddActivity.class);
+            startActivity(intent);
+        }*/
     }
 }

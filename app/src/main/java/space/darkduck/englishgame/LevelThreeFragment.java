@@ -5,13 +5,22 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Debug;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class LevelThreeFragment extends Fragment {
 
     private OnFragmentListener fragmentSendDataListener;
+    TextView text;
+    EditText edit;
+    Button button;
+    private  MainActivity activity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,6 +41,20 @@ public class LevelThreeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level_three, container, false);
+        activity=(MainActivity) getActivity();
+        text=view.findViewById(R.id.textView);
+        edit=view.findViewById(R.id.editText);
+        button=view.findViewById(R.id.button);
+        text.setText(activity.GetLevelWord());
+        button.setOnClickListener((v)->{
+            if(edit.getText().toString().equals(activity.GetTranslate())){
+                Log.d("ADIL","WORK");
+                fragmentSendDataListener.OnSendData("SuccessLevelThree");
+            }else {
+                fragmentSendDataListener.OnSendData("FailLevelThree");
+            }
+
+        });
         return view;
     }
 }
