@@ -27,7 +27,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         this.context = context;
     }
 
-    void addDictionary(String engWord, String rusWord, int prog) {
+    void addDictionary (String engWord, String rusWord, int prog) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -54,11 +54,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor GetEngWord(int id) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select EnglishWord from Dictionary where Id = ?", new String[]{String.valueOf(id)});
-        return cursor;
-    }
 
     public void Update(String word, int value) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -85,8 +80,45 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 columnRusWord + " TEXT, " +
                 columnProgress + " INTEGER);";
         db.execSQL(query);
-    }
 
+        createOriginDictionary(db,"mather","мама",0);
+        createOriginDictionary(db,"father","отец",0);
+        createOriginDictionary(db,"time","время",0);
+        createOriginDictionary(db,"day","день",0);
+        createOriginDictionary(db,"way","путь",0);
+        createOriginDictionary(db,"monday","понедельник",0);
+        createOriginDictionary(db,"tuesday","вторник",0);
+        createOriginDictionary(db,"wednesday","среда",0);
+        createOriginDictionary(db,"thursday","четверг",0);
+        createOriginDictionary(db,"friday","пятница",0);
+        createOriginDictionary(db,"saturday","суббота",0);
+        createOriginDictionary(db,"sunday","воскресенье",0);
+        createOriginDictionary(db,"water","вода",0);
+        createOriginDictionary(db,"say","сказать",0);
+        createOriginDictionary(db,"man","мужчина",0);
+        createOriginDictionary(db,"woman","женщина",0);
+        createOriginDictionary(db,"world","мир",0);
+        createOriginDictionary(db,"hello","привет",0);
+        createOriginDictionary(db,"life","жизнь",0);
+        createOriginDictionary(db,"money","деньги",0);
+        createOriginDictionary(db,"eye","глаза",0);
+        createOriginDictionary(db,"person","человек",0);
+        createOriginDictionary(db,"door","дверь",0);
+        createOriginDictionary(db,"body","тело",0);
+        createOriginDictionary(db,"country","страна",0);
+        createOriginDictionary(db,"hour","час",0);
+        createOriginDictionary(db,"car","машина",0);
+        createOriginDictionary(db,"home","дом",0);
+        createOriginDictionary(db,"night","ночь",0);
+        createOriginDictionary(db,"room","комната",0);
+    }
+    private  void createOriginDictionary(SQLiteDatabase db,String engWord,String rusWord,int progress){
+        ContentValues cv = new ContentValues();
+        cv.put(columnEngWord, engWord);
+        cv.put(columnRusWord, rusWord);
+        cv.put(columnProgress, progress);
+        db.insert(tableName, null, cv);
+    }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + tableName);
