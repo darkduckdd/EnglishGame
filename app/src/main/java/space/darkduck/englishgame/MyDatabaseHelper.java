@@ -20,6 +20,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String columnEngWord = "EnglishWord";
     private static final String columnRusWord = "RussianWord";
     private static final String columnProgress = "Progress";
+    private  int maxPoint=3;
 
     MyDatabaseHelper(@Nullable Context context) {
         super(context, databaseName, null, databaseVersion);
@@ -68,7 +69,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor GetWordsForLevel() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select EnglishWord from Dictionary where Progress < ? order by random() limit 10", new String[]{String.valueOf(4)});
+        Cursor cursor = db.rawQuery("select EnglishWord from Dictionary where Progress < ? order by random() limit 10", new String[]{String.valueOf(maxPoint)});
         return cursor;
     }
     public Cursor GetProgress(String word){

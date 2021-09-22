@@ -44,11 +44,11 @@ public class LevelOneFragment extends Fragment {
         rightButton = view.findViewById(R.id.rightButton);
         activity=(MainActivity) getActivity();
         rightButton.setOnClickListener((v) -> {
-            fragmentSendDataListener.OnSendData("Success");
+            fragmentSendDataListener.OnSendData("SuccessLevelOne");
         });
 
         mistakeButton.setOnClickListener((v) -> {
-            fragmentSendDataListener.OnSendData("Fail");
+            fragmentSendDataListener.OnSendData("FailLevelOne");
         });
  
         textView.setText(activity.GetLevelWord());

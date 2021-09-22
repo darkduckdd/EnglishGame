@@ -1,16 +1,13 @@
 package space.darkduck.englishgame;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.os.Debug;
 import android.util.Log;
-import android.widget.Switch;
-import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -18,10 +15,14 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentListener {
 
-    FloatingActionButton addButton, playButton;
-    MyDatabaseHelper myDB;
-    ArrayList<String> levelWords = new ArrayList();
-    LevelOneFragment fragmentLevelOne;
+    private FloatingActionButton addButton, playButton;
+    private MyDatabaseHelper myDB;
+    private ArrayList<String> levelEngWords = new ArrayList();
+    private ArrayList<String> levelRusWords = new ArrayList();
+    private LevelOneFragment fragmentLevelOne;
+    private LevelTwoFragment fragmentLevelTwo;
+    private LevelThreeFragment fragmentLevelThree;
+    private int currentWordPosition = 5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +31,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
         addButton = findViewById(R.id.addButton);
         playButton = findViewById(R.id.playButton);
         myDB = new MyDatabaseHelper(MainActivity.this);
-        GetWordsAndSaveInArray(myDB, levelWords);
-
+        GetEngWordsAndSaveInArray(myDB, levelEngWords);
+        GetRusWordsAndSaveInArray(myDB, levelEngWords, levelRusWords);
+        //levelRusWords.add("идти");
         addButton.setOnClickListener((v) -> {
             Intent intent = new Intent(MainActivity.this, AddActivity.class);
             startActivity(intent);
@@ -46,10 +48,22 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
     }
 
     public String GetLevelWord() {
-        return levelWords.get(0);
+        return levelEngWords.get(currentWordPosition);
     }
 
-    private void GetWordsAndSaveInArray(MyDatabaseHelper myDB, ArrayList<String> levelWords) {
+    public ArrayList<String> GetListRusWords() {
+        return levelRusWords;
+    }
+
+    public int GetPosition() {
+        return currentWordPosition;
+    }
+
+    public String GetTranslate() {
+        return GetStringFromCursor(myDB.GetRusWord(levelEngWords.get(currentWordPosition)));
+    }
+
+    private void GetEngWordsAndSaveInArray(MyDatabaseHelper myDB, ArrayList<String> levelWords) {
         Cursor cursor = myDB.GetWordsForLevel();
         if (cursor.moveToFirst()) {
             String str;
@@ -82,16 +96,33 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
     @Override
     public void OnSendData(String data) {
         switch (data) {
-            case "Success":
-                myDB.Update(levelWords.get(0), 1);
-                LevelTwoFragment fragment = new LevelTwoFragment();
-                FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.containerFL, fragment);
-                ft.commit();
+            case "SuccessLevelOne":
+                fragmentLevelTwo = new LevelTwoFragment();
+                ChangeFragment(1,fragmentLevelTwo);
                 break;
-            case "Fail":
-                fragmentLevelOne.SetTranslate(GetStringFromCursor(myDB.GetRusWord(levelWords.get(0))));
+            case "FailLevelOne":
+                fragmentLevelOne.SetTranslate(GetStringFromCursor(myDB.GetRusWord(levelEngWords.get(currentWordPosition))));
                 break;
+            case "SuccessLevelTwo":
+                fragmentLevelThree=new LevelThreeFragment();
+                ChangeFragment(2,fragmentLevelThree);
+                break;
+            case "FailLevelTwo":
+                ChangeFragment(0,fragmentLevelOne);
+                break;
+        }
+    }
+
+    public  void ChangeFragment(int value, Fragment fragment){
+        myDB.Update(levelEngWords.get(currentWordPosition), value);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.containerFL, fragment);
+        ft.commit();
+    }
+
+    private void GetRusWordsAndSaveInArray(MyDatabaseHelper myDB, ArrayList<String> engWords, ArrayList<String> rusWords) {
+        for (String str : engWords) {
+            rusWords.add(GetStringFromCursor(myDB.GetRusWord(str)));
         }
     }
 }
