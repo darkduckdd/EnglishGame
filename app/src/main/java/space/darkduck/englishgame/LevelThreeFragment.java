@@ -3,21 +3,15 @@ package space.darkduck.englishgame;
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
-public class LevelOneFragment extends Fragment {
+public class LevelThreeFragment extends Fragment {
 
-    TextView textView;
     private OnFragmentListener fragmentSendDataListener;
-    private MainActivity activity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -37,25 +31,7 @@ public class LevelOneFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_level_one, container, false);
-        Button rightButton, mistakeButton;
-        textView = view.findViewById(R.id.text);
-        mistakeButton = view.findViewById(R.id.mistakeButton);
-        rightButton = view.findViewById(R.id.rightButton);
-        activity=(MainActivity) getActivity();
-        rightButton.setOnClickListener((v) -> {
-            fragmentSendDataListener.OnSendData("Success");
-        });
-
-        mistakeButton.setOnClickListener((v) -> {
-            fragmentSendDataListener.OnSendData("Fail");
-        });
- 
-        textView.setText(activity.GetLevelWord());
+        View view = inflater.inflate(R.layout.fragment_level_three, container, false);
         return view;
-    }
-
-    public void SetTranslate(String word){
-        textView.setText(word);
     }
 }
