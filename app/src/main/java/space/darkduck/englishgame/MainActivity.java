@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
     private final int ScoreAddPoint=10;
     private final int ScoreRemovePoint=5;
     private int maxWords=10;
+    private int test=100;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
