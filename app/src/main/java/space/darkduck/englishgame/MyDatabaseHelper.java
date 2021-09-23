@@ -5,11 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Debug;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-
-import java.util.ArrayList;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
     private Context context;
@@ -20,7 +20,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String columnEngWord = "EnglishWord";
     private static final String columnRusWord = "RussianWord";
     private static final String columnProgress = "Progress";
-    private  int maxPoint=3;
+    private  int maxPoint=100;
+    private int maxWords=10;
 
     MyDatabaseHelper(@Nullable Context context) {
         super(context, databaseName, null, databaseVersion);
@@ -64,13 +65,18 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor GetWordsForLevel() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select EnglishWord from Dictionary where Progress < ? order by random() limit 10", new String[]{String.valueOf(maxPoint)});
+        Cursor cursor = db.rawQuery("select EnglishWord from Dictionary where Progress < ? order by random() limit "+maxWords, new String[]{String.valueOf(maxPoint)});
         return cursor;
     }
-    public Cursor GetProgress(String word){
+    public int GetProgress(String word){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select Progress from Dictionary where EnglishWord = ?", new String[]{word});
-        return cursor;
+        cursor.moveToFirst();
+        int number=cursor.getInt(cursor.getColumnIndex(columnProgress));
+        cursor.close();
+        return number;
+
+
     }
 
     @Override
@@ -81,38 +87,38 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 columnProgress + " INTEGER);";
         db.execSQL(query);
 
-        createOriginDictionary(db,"mather","мама",0);
-        createOriginDictionary(db,"father","отец",0);
-        createOriginDictionary(db,"time","время",0);
-        createOriginDictionary(db,"day","день",0);
-        createOriginDictionary(db,"way","путь",0);
-        createOriginDictionary(db,"monday","понедельник",0);
-        createOriginDictionary(db,"tuesday","вторник",0);
-        createOriginDictionary(db,"wednesday","среда",0);
-        createOriginDictionary(db,"thursday","четверг",0);
-        createOriginDictionary(db,"friday","пятница",0);
-        createOriginDictionary(db,"saturday","суббота",0);
-        createOriginDictionary(db,"sunday","воскресенье",0);
-        createOriginDictionary(db,"water","вода",0);
-        createOriginDictionary(db,"say","сказать",0);
-        createOriginDictionary(db,"man","мужчина",0);
-        createOriginDictionary(db,"woman","женщина",0);
-        createOriginDictionary(db,"world","мир",0);
-        createOriginDictionary(db,"hello","привет",0);
-        createOriginDictionary(db,"life","жизнь",0);
-        createOriginDictionary(db,"money","деньги",0);
-        createOriginDictionary(db,"eye","глаза",0);
-        createOriginDictionary(db,"person","человек",0);
-        createOriginDictionary(db,"door","дверь",0);
-        createOriginDictionary(db,"body","тело",0);
-        createOriginDictionary(db,"country","страна",0);
-        createOriginDictionary(db,"hour","час",0);
-        createOriginDictionary(db,"car","машина",0);
-        createOriginDictionary(db,"home","дом",0);
-        createOriginDictionary(db,"night","ночь",0);
-        createOriginDictionary(db,"room","комната",0);
+        addStartWordToDatabase(db,"mather","мама",0);
+        addStartWordToDatabase(db,"father","отец",0);
+        addStartWordToDatabase(db,"time","время",0);
+        addStartWordToDatabase(db,"day","день",0);
+        addStartWordToDatabase(db,"way","путь",0);
+        addStartWordToDatabase(db,"monday","понедельник",0);
+        addStartWordToDatabase(db,"tuesday","вторник",0);
+        addStartWordToDatabase(db,"wednesday","среда",0);
+        addStartWordToDatabase(db,"thursday","четверг",0);
+        addStartWordToDatabase(db,"friday","пятница",0);
+        addStartWordToDatabase(db,"saturday","суббота",0);
+        addStartWordToDatabase(db,"sunday","воскресенье",0);
+        addStartWordToDatabase(db,"water","вода",0);
+        addStartWordToDatabase(db,"say","сказать",0);
+        addStartWordToDatabase(db,"man","мужчина",0);
+        addStartWordToDatabase(db,"woman","женщина",0);
+        addStartWordToDatabase(db,"world","мир",0);
+        addStartWordToDatabase(db,"hello","привет",0);
+        addStartWordToDatabase(db,"life","жизнь",0);
+        addStartWordToDatabase(db,"money","деньги",0);
+        addStartWordToDatabase(db,"eye","глаза",0);
+        addStartWordToDatabase(db,"person","человек",0);
+        addStartWordToDatabase(db,"door","дверь",0);
+        addStartWordToDatabase(db,"body","тело",0);
+        addStartWordToDatabase(db,"country","страна",0);
+        addStartWordToDatabase(db,"hour","час",0);
+        addStartWordToDatabase(db,"car","машина",0);
+        addStartWordToDatabase(db,"home","дом",0);
+        addStartWordToDatabase(db,"night","ночь",0);
+        addStartWordToDatabase(db,"room","комната",0);
     }
-    private  void createOriginDictionary(SQLiteDatabase db,String engWord,String rusWord,int progress){
+    private  void addStartWordToDatabase(SQLiteDatabase db, String engWord, String rusWord, int progress){
         ContentValues cv = new ContentValues();
         cv.put(columnEngWord, engWord);
         cv.put(columnRusWord, rusWord);
