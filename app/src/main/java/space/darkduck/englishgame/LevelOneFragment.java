@@ -3,10 +3,8 @@ package space.darkduck.englishgame;
 import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,11 +49,15 @@ public class LevelOneFragment extends Fragment {
             fragmentSendDataListener.OnSendData("FailLevelOne");
         });
  
-        textView.setText(activity.GetLevelWord());
+        textView.setText(activity.GetLevelOneWord());
         return view;
     }
 
     public void SetTranslate(String word){
         textView.setText(word);
     }
+    public void SetWord(String word){
+        textView.setText(word);
+    }
+
 }

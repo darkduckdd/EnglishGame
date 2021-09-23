@@ -74,7 +74,7 @@ public class LevelTwoFragment extends Fragment {
             });
         }
         activity = (MainActivity) getActivity();
-        text.setText(activity.GetLevelWord());
+        text.setText(activity.GetLevelTwoWord());
         rusWords.addAll(activity.GetListRusWords());
         SetTextButtons(buttons, activity.GetPosition());
         return view;

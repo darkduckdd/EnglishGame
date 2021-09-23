@@ -5,8 +5,6 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
-import android.os.Debug;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +43,7 @@ public class LevelThreeFragment extends Fragment {
         text=view.findViewById(R.id.textView);
         edit=view.findViewById(R.id.editText);
         button=view.findViewById(R.id.button);
-        text.setText(activity.GetLevelWord());
+        text.setText(activity.GetLevelOneWord());
         button.setOnClickListener((v)->{
             if(edit.getText().toString().equals(activity.GetTranslate())){
                 fragmentSendDataListener.OnSendData("SuccessLevelThree");
