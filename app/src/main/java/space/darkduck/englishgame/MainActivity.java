@@ -58,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
             fragmentLevelTwo=new LevelTwoFragment();
             fragmentLevelThree=new LevelThreeFragment();
             GetProgress();
-
         });
     }
 
@@ -138,15 +137,15 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
         int currentWordProgress = myDB.GetProgress(levelEngWordsLevelOne.get(currentWordPosition));
         if (currentWordProgress < 0) {
             myDB.Update(levelEngWordsLevelOne.get(currentWordPosition),0);
-            ChangeFragment(fragmentLevelOne);
+            //ChangeFragment(fragmentLevelOne);
         }
         else if(currentWordProgress>=0 &currentWordProgress<20){
-            ChangeFragment(fragmentLevelOne);
+            //ChangeFragment(fragmentLevelOne);
         }
         else if(currentWordProgress>=20 & currentWordProgress<50) {
-            ChangeFragment(fragmentLevelTwo);
+           // ChangeFragment(fragmentLevelTwo);
         }else if(currentWordProgress>=50 &currentWordProgress<100){
-            ChangeFragment(fragmentLevelThree);
+            //ChangeFragment(fragmentLevelThree);
         }
         else if(currentWordProgress>=100){
             //todo
@@ -155,7 +154,9 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
 
     public  void ChangeFragment( Fragment fragment){
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Log.d("Adil", levelEngWordsLevelTwo.size()+";");
         ft.replace(R.id.containerFL, fragment);
+        Log.d("Adil", levelEngWordsLevelTwo.size()+"!");
         ft.commit();
     }
 
@@ -170,6 +171,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
                         Intent intent = new Intent(MainActivity.this, AddActivity.class);
                         startActivity(intent);
                     }else {
+
                         currentWordPosition=0;
                         ChangeFragment(fragmentLevelTwo);
                     }
@@ -193,7 +195,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
                         startActivity(intent);
                     }else {
                         currentWordPosition=0;
-                        ChangeFragment(fragmentLevelThree);
+                        //ChangeFragment(fragmentLevelThree);
                     }
                 }
                 else {
@@ -209,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
                 myDB.Update(GetLevelOneWord(), myDB.GetProgress(GetLevelOneWord())+ScoreAddPoint);
                 break;
             case "FailLevelThree":
-                ChangeFragment(fragmentLevelTwo);
+                //ChangeFragment(fragmentLevelTwo);
                 myDB.Update(GetLevelOneWord(), myDB.GetProgress(GetLevelOneWord())-ScoreRemovePoint);
                 break;
         }
