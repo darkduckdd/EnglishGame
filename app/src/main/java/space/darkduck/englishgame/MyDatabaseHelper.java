@@ -22,7 +22,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private  int maxPoint=100;
     private int minPoint=0;
     private int minPointsForLevelTwo=20;
-    private int minPointsForLevelThree =50;
+    private int minPointsForLevelThree =60;
     private int maxWords=10;
 
     MyDatabaseHelper(@Nullable Context context) {
@@ -45,47 +45,54 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor GetRusWord(String word) {
+    public Cursor getRusWord(String word) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select RussianWord from Dictionary where EnglishWord = ?", new String[]{word});
         return cursor;
     }
 
-    public Cursor GetEngWord(String word) {
+    public Cursor getEngWord(String word) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select EnglishWord from Dictionary where RussianWord = ?", new String[]{word});
         return cursor;
     }
 
-    public void Update(String word, int value) {
+    public void update(String word, int value) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(columnProgress, value);
         db.update(tableName, cv, columnEngWord + "=? or "+columnRusWord+"=?", new String[]{word});
     }
 
-    public Cursor GetWordsForLevelOne() {
+    public Cursor getWordsForLevelOne() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select EnglishWord from Dictionary where Progress >= ? and Progress< ? order by random() limit "+maxWords, new String[]{String.valueOf(minPoint),String.valueOf(minPointsForLevelTwo)});
         return cursor;
     }
-    public Cursor GetWordsForLevelTwo() {
+    public Cursor getWordsForLevelTwo() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select EnglishWord from Dictionary where Progress >= ? and Progress< ? order by random() limit "+maxWords, new String[]{String.valueOf(minPointsForLevelTwo),String.valueOf(minPointsForLevelThree)});
         return cursor;
     }
-    public Cursor GetWordsForLevelThree() {
+    public Cursor getWordsForLevelThree() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select EnglishWord from Dictionary where Progress >= ? and Progress< ? order by random() limit "+maxWords, new String[]{String.valueOf(minPointsForLevelThree),String.valueOf(maxPoint)});
         return cursor;
     }
-    public int GetProgress(String word){
+    public int getProgress(String word){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select Progress from Dictionary where EnglishWord = ?", new String[]{word});
         cursor.moveToFirst();
         int number=cursor.getInt(cursor.getColumnIndex(columnProgress));
         cursor.close();
         return number;
+    }
+    private  void addStartWordToDatabase(SQLiteDatabase db, String engWord, String rusWord, int progress){
+        ContentValues cv = new ContentValues();
+        cv.put(columnEngWord, engWord);
+        cv.put(columnRusWord, rusWord);
+        cv.put(columnProgress, progress);
+        db.insert(tableName, null, cv);
     }
 
     @Override
@@ -127,13 +134,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         addStartWordToDatabase(db,"night","ночь",0);
         addStartWordToDatabase(db,"room","комната",0);
     }
-    private  void addStartWordToDatabase(SQLiteDatabase db, String engWord, String rusWord, int progress){
-        ContentValues cv = new ContentValues();
-        cv.put(columnEngWord, engWord);
-        cv.put(columnRusWord, rusWord);
-        cv.put(columnProgress, progress);
-        db.insert(tableName, null, cv);
-    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + tableName);

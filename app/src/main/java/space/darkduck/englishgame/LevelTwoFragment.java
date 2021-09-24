@@ -28,18 +28,19 @@ public class LevelTwoFragment extends Fragment {
     private ArrayList<String> rusWords = new ArrayList<>();
     private ArrayList<Button> buttons = new ArrayList<>();
 
-    private void SetTextButtons(List<Button> buttonList, int index) {
-        Set<Integer> generated = new HashSet<Integer>();
+    private void setTextButtons(List<Button> buttonList, String translate) {
+        Set<String> strGenerated=new HashSet<>();
+        Set<Integer> generated = new HashSet<>();
         Random r = new Random();
-        generated.add(index);
-        while (generated.size() < buttonList.size()) {
-            generated.add(r.nextInt(rusWords.size()));
+        strGenerated.add(translate);
+        while (strGenerated.size() < buttonList.size()) {
+            strGenerated.add(rusWords.get(r.nextInt(rusWords.size())));
         }
         TreeSet myTreeSet = new TreeSet();
-        myTreeSet.addAll(generated);
-        Iterator<Integer> integerIterator = myTreeSet.iterator();
+        myTreeSet.addAll(strGenerated);
+        Iterator<String> strIterator = myTreeSet.iterator();
         for (int i = 0; i < buttonList.size(); i++) {
-            buttonList.get(i).setText(rusWords.get(integerIterator.next()));
+            buttonList.get(i).setText(strIterator.next());
         }
     }
 
@@ -70,22 +71,27 @@ public class LevelTwoFragment extends Fragment {
         buttons.addAll(Arrays.asList(button1, button2, button3, button4));
         for (Button btn : buttons) {
             btn.setOnClickListener((v) -> {
-                CheckClick(btn, activity.GetTranslate());
+                checkClick(btn, activity.getTranslate());
             });
         }
         activity = (MainActivity) getActivity();
-        text.setText(activity.GetLevelTwoWord());
-        rusWords.addAll(activity.GetListRusWords());
-        SetTextButtons(buttons, activity.GetPosition());
+        text.setText(activity.getLevelTwoWord());
+        rusWords.addAll(activity.getListRusWords());
+        setTextButtons(buttons, activity.getTranslate());
         return view;
     }
 
 
-    void CheckClick(Button button, String str) {
+    void checkClick(Button button, String str) {
         if (button.getText().equals(str)) {
-            fragmentSendDataListener.OnSendData("SuccessLevelTwo");
+            fragmentSendDataListener.onSendData("SuccessLevelTwo");
         } else {
-            fragmentSendDataListener.OnSendData("FailLevelTwo");
+            fragmentSendDataListener.onSendData("FailLevelTwo");
         }
+    }
+
+    public void setWord(String str, String translate) {
+        text.setText(str);
+        setTextButtons(buttons, translate);
     }
 }

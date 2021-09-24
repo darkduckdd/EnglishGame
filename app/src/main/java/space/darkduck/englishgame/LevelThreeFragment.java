@@ -15,9 +15,9 @@ import android.widget.TextView;
 public class LevelThreeFragment extends Fragment {
 
     private OnFragmentListener fragmentSendDataListener;
-    TextView text;
-    EditText edit;
-    Button button;
+    private TextView text;
+    private EditText edit;
+    private Button button;
     private  MainActivity activity;
 
     @Override
@@ -43,12 +43,12 @@ public class LevelThreeFragment extends Fragment {
         text=view.findViewById(R.id.textView);
         edit=view.findViewById(R.id.editText);
         button=view.findViewById(R.id.button);
-        text.setText(activity.GetLevelOneWord());
+        text.setText(activity.getLevelThreeWord());
         button.setOnClickListener((v)->{
-            if(edit.getText().toString().equals(activity.GetTranslate())){
-                fragmentSendDataListener.OnSendData("SuccessLevelThree");
+            if(edit.getText().toString().equals(activity.getTranslate())){
+                fragmentSendDataListener.onSendData("SuccessLevelThree");
             }else {
-                fragmentSendDataListener.OnSendData("FailLevelThree");
+                fragmentSendDataListener.onSendData("FailLevelThree");
             }
         });
         return view;

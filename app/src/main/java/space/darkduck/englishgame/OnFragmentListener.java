@@ -1,5 +1,5 @@
 package space.darkduck.englishgame;
 
 public interface OnFragmentListener {
-    void OnSendData(String data);
+    void onSendData(String data);
 }

@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class LevelOneFragment extends Fragment {
 
-    TextView textView;
+    private TextView textView;
     private OnFragmentListener fragmentSendDataListener;
     private MainActivity activity;
 
@@ -42,21 +42,21 @@ public class LevelOneFragment extends Fragment {
         rightButton = view.findViewById(R.id.rightButton);
         activity=(MainActivity) getActivity();
         rightButton.setOnClickListener((v) -> {
-            fragmentSendDataListener.OnSendData("SuccessLevelOne");
+            fragmentSendDataListener.onSendData("SuccessLevelOne");
         });
 
         mistakeButton.setOnClickListener((v) -> {
-            fragmentSendDataListener.OnSendData("FailLevelOne");
+            fragmentSendDataListener.onSendData("FailLevelOne");
         });
  
-        textView.setText(activity.GetLevelOneWord());
+        textView.setText(activity.getLevelOneWord());
         return view;
     }
 
-    public void SetTranslate(String word){
+    public void setTranslate(String word){
         textView.setText(word);
     }
-    public void SetWord(String word){
+    public void setWord(String word){
         textView.setText(word);
     }
 
