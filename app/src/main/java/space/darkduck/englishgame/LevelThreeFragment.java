@@ -54,7 +54,7 @@ public class LevelThreeFragment extends Fragment {
         return view;
     }
 
-    public void setWord(String s, String translate) {
+    public void setWord(String s) {
         text.setText(s);
         edit.setText("");
     }

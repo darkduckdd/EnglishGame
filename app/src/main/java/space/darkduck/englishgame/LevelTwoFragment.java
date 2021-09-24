@@ -30,7 +30,6 @@ public class LevelTwoFragment extends Fragment {
 
     private void setTextButtons(List<Button> buttonList, String translate) {
         Set<String> strGenerated=new HashSet<>();
-        Set<Integer> generated = new HashSet<>();
         Random r = new Random();
         strGenerated.add(translate);
         while (strGenerated.size() < buttonList.size()) {

@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -219,7 +218,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
                     if (engWordsLevelThree.size()>=1) {
                         Random random = new Random();
                         currentWordPosition = random.nextInt(engWordsLevelThree.size());
-                        fragmentLevelThree.setWord(engWordsLevelThree.get(currentWordPosition), getTranslateForLevelThree());
+                        fragmentLevelThree.setWord(engWordsLevelThree.get(currentWordPosition));
                     }
                     else if(engWordsLevelThree.size()==0){
                         if(engWordsLevelThree.size()==0){
@@ -234,7 +233,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
                 else {
                     Random random = new Random();
                     currentWordPosition = random.nextInt(engWordsLevelThree.size());
-                    fragmentLevelThree.setWord(engWordsLevelThree.get(currentWordPosition), getTranslateForLevelThree());
+                    fragmentLevelThree.setWord(engWordsLevelThree.get(currentWordPosition));
                 }
                 break;
             case "FailLevelThree":
@@ -242,6 +241,4 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
                 break;
         }
     }
-
-
 }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -48,12 +47,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public Cursor getRusWord(String word) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select RussianWord from Dictionary where EnglishWord = ?", new String[]{word});
-        return cursor;
-    }
-
-    public Cursor getEngWord(String word) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("select EnglishWord from Dictionary where RussianWord = ?", new String[]{word});
         return cursor;
     }
 
