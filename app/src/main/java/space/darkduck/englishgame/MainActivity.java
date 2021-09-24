@@ -16,14 +16,13 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements OnFragmentListener {
 
-    private TextView text;
     private FloatingActionButton addButton, playButton;
     private MyDatabaseHelper myDB;
     private ArrayList<String> engWordsLevelOne = new ArrayList();
     private ArrayList<String> engWordsLevelTwo = new ArrayList();
     private ArrayList<String> engWordsLevelThree = new ArrayList();
     private ArrayList<String> rusWordsLevelTwo = new ArrayList();
-    private  ArrayList<String> levelRusWords=new ArrayList<>();
+    private  ArrayList<String> levelRusWordsThree=new ArrayList<>();
     private LevelOneFragment fragmentLevelOne;
     private LevelTwoFragment fragmentLevelTwo;
     private LevelThreeFragment fragmentLevelThree;
@@ -38,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        text = findViewById(R.id.textView2);
         addButton = findViewById(R.id.addButton);
         playButton = findViewById(R.id.playButton);
         myDB = new MyDatabaseHelper(MainActivity.this);
@@ -46,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
         getEngWordsAndSaveInArray(myDB, engWordsLevelTwo,2);
         getEngWordsAndSaveInArray(myDB, engWordsLevelThree,3);
         getRusWordsAndSaveInArray(myDB, engWordsLevelTwo, rusWordsLevelTwo);
+        getRusWordsAndSaveInArray(myDB,engWordsLevelThree,levelRusWordsThree);
         addButton.setOnClickListener((v) -> {
             Intent intent = new Intent(MainActivity.this, AddActivity.class);
             startActivity(intent);
@@ -82,15 +81,11 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
         return rusWordsLevelTwo;
     }
 
-    public int getPosition() {
-        return currentWordPosition;
-    }
-
     public String getTranslate() {
         return getStringFromCursor(myDB.getRusWord(engWordsLevelTwo.get(currentWordPosition)));
     }
     public String getTranslateForLevelThree(){
-        return getStringFromCursor(myDB.getRusWord(engWordsLevelTwo.get(currentWordPosition)));
+        return getStringFromCursor(myDB.getRusWord(engWordsLevelThree.get(currentWordPosition)));
     }
 
     private void getEngWordsAndSaveInArray(MyDatabaseHelper myDB, ArrayList<String> levelWords, int level) {
@@ -148,20 +143,19 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
         ft.replace(R.id.containerFL, fragment);
         ft.commit();
     }
+    public void changeCurrentWord(){
+        Random random = new Random();
+        currentWordPosition = random.nextInt(engWordsLevelOne.size());
+    }
 
     @Override
     public void onSendData(String data) {
         switch (data) {
             case "SuccessLevelOne":
-               // Log.d("Adil", GetLevelOneWord());
                 myDB.update(getLevelOneWord(), myDB.getProgress(getLevelOneWord())+ scoreAddPoint);
                 int progress=myDB.getProgress(getLevelOneWord());
-                //Log.d("Adil", "progress= "+ progress);
                 if(progress>=pointToLevelTwo){
                     engWordsLevelOne.remove(getLevelOneWord());
-                    //Log.d("Adil","size= "+levelEngWordsLevelOne.size());
-                    //Log.d("Adil","position= "+currentWordPosition);
-                    //изменить текст view fragment
                     if (engWordsLevelOne.size()>=1) {
                         Random random = new Random();
                         currentWordPosition = random.nextInt(engWordsLevelOne.size());
@@ -189,7 +183,6 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
             case "SuccessLevelTwo":
                 myDB.update(getLevelTwoWord(), myDB.getProgress(getLevelTwoWord())+ scoreAddPoint);
                 int progressLevelTwo=myDB.getProgress(getLevelTwoWord());
-                //Log.d("Adil", "progress= "+ progress);
                 if(progressLevelTwo>=pointToLevelThree){
                     engWordsLevelTwo.remove(getLevelTwoWord());
                     //Log.d("Adil","size= "+levelEngWordsLevelOne.size());
@@ -219,12 +212,36 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
                // myDB.Update(GetLevelOneWord(), myDB.GetProgress(GetLevelOneWord())-ScoreRemovePoint);
                 break;
             case  "SuccessLevelThree":
-                myDB.update(getLevelOneWord(), myDB.getProgress(getLevelOneWord())+ scoreAddPoint);
+                myDB.update(getLevelThreeWord(), myDB.getProgress(getLevelThreeWord())+ scoreAddPoint);
+                int progressLevelThree=myDB.getProgress(getLevelThreeWord());
+                if(progressLevelThree>=pointToEnd){
+                    engWordsLevelThree.remove(getLevelThreeWord());
+                    if (engWordsLevelThree.size()>=1) {
+                        Random random = new Random();
+                        currentWordPosition = random.nextInt(engWordsLevelThree.size());
+                        fragmentLevelThree.setWord(engWordsLevelThree.get(currentWordPosition), getTranslateForLevelThree());
+                    }
+                    else if(engWordsLevelThree.size()==0){
+                        if(engWordsLevelThree.size()==0){
+                            Intent intent = new Intent(MainActivity.this, AddActivity.class);
+                            startActivity(intent);
+                        }else {
+                            currentWordPosition=0;
+                            changeFragment(fragmentLevelOne);
+                        }
+                    }
+                }
+                else {
+                    Random random = new Random();
+                    currentWordPosition = random.nextInt(engWordsLevelThree.size());
+                    fragmentLevelThree.setWord(engWordsLevelThree.get(currentWordPosition), getTranslateForLevelThree());
+                }
                 break;
             case "FailLevelThree":
-                //ChangeFragment(fragmentLevelTwo);
-                myDB.update(getLevelOneWord(), myDB.getProgress(getLevelOneWord())- scoreRemovePoint);
+
                 break;
         }
     }
+
+
 }

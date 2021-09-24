@@ -45,12 +45,17 @@ public class LevelThreeFragment extends Fragment {
         button=view.findViewById(R.id.button);
         text.setText(activity.getLevelThreeWord());
         button.setOnClickListener((v)->{
-            if(edit.getText().toString().equals(activity.getTranslate())){
+            if(edit.getText().toString().equals(activity.getTranslateForLevelThree())){
                 fragmentSendDataListener.onSendData("SuccessLevelThree");
             }else {
                 fragmentSendDataListener.onSendData("FailLevelThree");
             }
         });
         return view;
+    }
+
+    public void setWord(String s, String translate) {
+        text.setText(s);
+        edit.setText("");
     }
 }

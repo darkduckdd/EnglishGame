@@ -36,19 +36,34 @@ public class LevelOneFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level_one, container, false);
-        Button rightButton, mistakeButton;
+        Button rightButton, mistakeButton,nextButton;
         textView = view.findViewById(R.id.text);
         mistakeButton = view.findViewById(R.id.mistakeButton);
         rightButton = view.findViewById(R.id.rightButton);
+        nextButton=view.findViewById(R.id.nextButton);
         activity=(MainActivity) getActivity();
+        nextButton.setVisibility(View.INVISIBLE);
+        nextButton.setEnabled(false);
         rightButton.setOnClickListener((v) -> {
             fragmentSendDataListener.onSendData("SuccessLevelOne");
         });
 
         mistakeButton.setOnClickListener((v) -> {
             fragmentSendDataListener.onSendData("FailLevelOne");
+            nextButton.setVisibility(View.VISIBLE);
+            nextButton.setEnabled(true);
+            rightButton.setEnabled(false);
+            rightButton.setVisibility(View.INVISIBLE);
         });
- 
+        nextButton.setOnClickListener((v)->{
+            activity.changeCurrentWord();
+            textView.setText(activity.getLevelOneWord());
+            rightButton.setEnabled(true);
+            rightButton.setVisibility(View.VISIBLE);
+            nextButton.setVisibility(View.INVISIBLE);
+            nextButton.setEnabled(false);
+
+        });
         textView.setText(activity.getLevelOneWord());
         return view;
     }
