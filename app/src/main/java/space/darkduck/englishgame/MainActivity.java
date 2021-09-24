@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
         return rusWordsLevelTwo;
     }
 
-    public String getTranslate() {
+    public String getTranslateForLevelTwo() {
         return getStringFromCursor(myDB.getRusWord(engWordsLevelTwo.get(currentWordPosition)));
     }
     public String getTranslateForLevelThree(){
@@ -142,9 +142,17 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
         ft.replace(R.id.containerFL, fragment);
         ft.commit();
     }
-    public void changeCurrentWord(){
+    public void changeCurrentLevelOneWord(){
         Random random = new Random();
         currentWordPosition = random.nextInt(engWordsLevelOne.size());
+    }
+    public void changeCurrentLevelTwoWord(){
+        Random random = new Random();
+        currentWordPosition = random.nextInt(engWordsLevelTwo.size());
+    }
+    public void changeCurrentLevelThreeWord(){
+        Random random = new Random();
+        currentWordPosition = random.nextInt(engWordsLevelThree.size());
     }
 
     @Override
@@ -184,12 +192,10 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
                 int progressLevelTwo=myDB.getProgress(getLevelTwoWord());
                 if(progressLevelTwo>=pointToLevelThree){
                     engWordsLevelTwo.remove(getLevelTwoWord());
-                    //Log.d("Adil","size= "+levelEngWordsLevelOne.size());
-                    //Log.d("Adil","position= "+currentWordPosition);
                     if (engWordsLevelTwo.size()>=1) {
                         Random random = new Random();
                         currentWordPosition = random.nextInt(engWordsLevelTwo.size());
-                        fragmentLevelTwo.setWord(engWordsLevelTwo.get(currentWordPosition), getTranslate());
+                        fragmentLevelTwo.setWord(engWordsLevelTwo.get(currentWordPosition), getTranslateForLevelTwo());
                     }
                     else if(engWordsLevelTwo.size()==0){
                         if(engWordsLevelThree.size()==0){
@@ -204,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentListene
                 else {
                     Random random = new Random();
                     currentWordPosition = random.nextInt(engWordsLevelTwo.size());
-                    fragmentLevelTwo.setWord(engWordsLevelTwo.get(currentWordPosition), getTranslate());
+                    fragmentLevelTwo.setWord(engWordsLevelTwo.get(currentWordPosition), getTranslateForLevelTwo());
                 }
                 break;
             case "FailLevelTwo":

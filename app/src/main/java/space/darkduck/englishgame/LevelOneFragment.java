@@ -56,7 +56,7 @@ public class LevelOneFragment extends Fragment {
             rightButton.setVisibility(View.INVISIBLE);
         });
         nextButton.setOnClickListener((v)->{
-            activity.changeCurrentWord();
+            activity.changeCurrentLevelOneWord();
             textView.setText(activity.getLevelOneWord());
             rightButton.setEnabled(true);
             rightButton.setVisibility(View.VISIBLE);

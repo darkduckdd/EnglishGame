@@ -1,6 +1,7 @@
 package space.darkduck.englishgame;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -70,13 +71,13 @@ public class LevelTwoFragment extends Fragment {
         buttons.addAll(Arrays.asList(button1, button2, button3, button4));
         for (Button btn : buttons) {
             btn.setOnClickListener((v) -> {
-                checkClick(btn, activity.getTranslate());
+                checkClick(btn, activity.getTranslateForLevelTwo());
             });
         }
         activity = (MainActivity) getActivity();
         text.setText(activity.getLevelTwoWord());
         rusWords.addAll(activity.getListRusWords());
-        setTextButtons(buttons, activity.getTranslate());
+        setTextButtons(buttons, activity.getTranslateForLevelTwo());
         return view;
     }
 
@@ -84,8 +85,19 @@ public class LevelTwoFragment extends Fragment {
     void checkClick(Button button, String str) {
         if (button.getText().equals(str)) {
             fragmentSendDataListener.onSendData("SuccessLevelTwo");
+            //button.setBackgroundColor(Color.GREEN);
         } else {
+            for(Button btn:buttons){
+                if(btn.getText().equals(str)){
+                    //btn.setBackgroundColor(Color.GREEN);
+                }else {
+                   // btn.setBackgroundColor(Color.RED);
+                }
+            }
             fragmentSendDataListener.onSendData("FailLevelTwo");
+            activity.changeCurrentLevelTwoWord();
+            setWord(activity.getLevelTwoWord(),activity.getTranslateForLevelTwo());
+
         }
     }
 
