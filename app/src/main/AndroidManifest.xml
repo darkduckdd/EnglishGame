@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="space.darkduck.englishgame">
+    package="space.darkduck.englishgame" >
 
     <application
         android:allowBackup="true"
@@ -9,19 +9,24 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".AddActivity"
-            android:label="Add Dictionary"
-            android:parentActivityName=".MainActivity" />
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="English Game">
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".AddActivity"
+            android:label="Add Dictionary"
+            android:parentActivityName=".PlayActivity" />
+        <activity
+            android:name=".PlayActivity"
+            android:label="English Game" >
+
         </activity>
     </application>
 

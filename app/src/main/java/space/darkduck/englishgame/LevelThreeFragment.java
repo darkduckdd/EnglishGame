@@ -18,7 +18,7 @@ public class LevelThreeFragment extends Fragment {
     private TextView text;
     private EditText edit;
     private Button button;
-    private  MainActivity activity;
+    private PlayActivity activity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,7 @@ public class LevelThreeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level_three, container, false);
-        activity=(MainActivity) getActivity();
+        activity=(PlayActivity) getActivity();
         text=view.findViewById(R.id.textView);
         edit=view.findViewById(R.id.editText);
         button=view.findViewById(R.id.button);

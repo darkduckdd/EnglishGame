@@ -15,7 +15,7 @@ public class LevelOneFragment extends Fragment {
 
     private TextView textView;
     private OnFragmentListener fragmentSendDataListener;
-    private MainActivity activity;
+    private PlayActivity activity;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class LevelOneFragment extends Fragment {
         mistakeButton = view.findViewById(R.id.mistakeButton);
         rightButton = view.findViewById(R.id.rightButton);
         nextButton=view.findViewById(R.id.nextButton);
-        activity=(MainActivity) getActivity();
+        activity=(PlayActivity) getActivity();
         nextButton.setVisibility(View.INVISIBLE);
         nextButton.setEnabled(false);
         rightButton.setOnClickListener((v) -> {

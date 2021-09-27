@@ -1,7 +1,6 @@
 package space.darkduck.englishgame;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -25,7 +24,7 @@ public class LevelTwoFragment extends Fragment {
     private OnFragmentListener fragmentSendDataListener;
     private Button button1, button2, button3, button4;
     private TextView text;
-    private MainActivity activity;
+    private PlayActivity activity;
     private ArrayList<String> rusWords = new ArrayList<>();
     private ArrayList<Button> buttons = new ArrayList<>();
 
@@ -74,7 +73,7 @@ public class LevelTwoFragment extends Fragment {
                 checkClick(btn, activity.getTranslateForLevelTwo());
             });
         }
-        activity = (MainActivity) getActivity();
+        activity = (PlayActivity) getActivity();
         text.setText(activity.getLevelTwoWord());
         rusWords.addAll(activity.getListRusWords());
         setTextButtons(buttons, activity.getTranslateForLevelTwo());
