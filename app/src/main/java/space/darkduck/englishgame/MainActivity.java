@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         addButton = findViewById(R.id.addButton);
         playButton = findViewById(R.id.playButton);
+        statisticButton=findViewById(R.id.showStatistics);
         drawerLayout=findViewById(R.id.drawerLayout);
         imageView=findViewById(R.id.imageView);
         imageView.setOnClickListener((v)->{
@@ -33,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
 
         playButton.setOnClickListener((v)->{
             Intent intent = new Intent(MainActivity.this, PlayActivity.class);
+            startActivity(intent);
+        });
+        statisticButton.setOnClickListener((v)->{
+            Intent intent = new Intent(MainActivity.this, StatisticsActivity.class);
             startActivity(intent);
         });
     }

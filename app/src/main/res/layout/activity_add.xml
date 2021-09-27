@@ -9,27 +9,27 @@
 
     <EditText
         android:id="@+id/engInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_width="350dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="112dp"
         android:ems="10"
         android:hint="English Word"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.525"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/rusInput"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_width="350dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="52dp"
         android:ems="10"
         android:hint="Translate Word"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/engInput" />
 
@@ -38,12 +38,12 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_marginStart="190dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="228dp"
         android:layout_marginEnd="50dp"
         android:text="Add"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.616"
+        app:layout_constraintHorizontal_bias="0.683"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rusInput" />
 </androidx.constraintlayout.widget.ConstraintLayout>

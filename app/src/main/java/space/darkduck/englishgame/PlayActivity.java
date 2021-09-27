@@ -26,17 +26,17 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     private LevelTwoFragment fragmentLevelTwo;
     private LevelThreeFragment fragmentLevelThree;
     private int currentWordPosition = 0;
-    private final int scoreAddPoint =20;
-    private final int scoreRemovePoint =10;
-    private final  int pointToLevelTwo=20;
-    private final  int pointToLevelThree=60;
-    private final  int pointToEnd=100;
-    private int progressForBar=0;
+    private final int scoreAddPoint = 20;
+    private final int scoreRemovePoint = 10;
+    private final int pointToLevelTwo = 20;
+    private final int pointToLevelThree = 60;
+    private final int pointToEnd = 100;
+    private int progressForBar = 0;
     private ArrayList<String> engWordsLevelOne = new ArrayList();
     private ArrayList<String> engWordsLevelTwo = new ArrayList();
     private ArrayList<String> engWordsLevelThree = new ArrayList();
     private ArrayList<String> rusWordsLevelTwo = new ArrayList();
-    private  ArrayList<String> levelRusWordsThree=new ArrayList<>();
+    private ArrayList<String> levelRusWordsThree = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,9 +69,11 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     public String getLevelOneWord() {
         return engWordsLevelOne.get(currentWordPosition);
     }
+
     public String getLevelTwoWord() {
         return engWordsLevelTwo.get(currentWordPosition);
     }
+
     public String getLevelThreeWord() {
         return engWordsLevelThree.get(currentWordPosition);
     }
@@ -83,7 +85,8 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     public String getTranslateForLevelTwo() {
         return getStringFromCursor(myDB.getRusWord(engWordsLevelTwo.get(currentWordPosition)));
     }
-    public String getTranslateForLevelThree(){
+
+    public String getTranslateForLevelThree() {
         return getStringFromCursor(myDB.getRusWord(engWordsLevelThree.get(currentWordPosition)));
     }
 
@@ -137,20 +140,23 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
         return null;
     }
 
-    public  void changeFragment(Fragment fragment){
+    public void changeFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.containerFL, fragment);
         ft.commit();
     }
-    public void changeCurrentLevelOneWord(){
+
+    public void changeCurrentLevelOneWord() {
         Random random = new Random();
         currentWordPosition = random.nextInt(engWordsLevelOne.size());
     }
-    public void changeCurrentLevelTwoWord(){
+
+    public void changeCurrentLevelTwoWord() {
         Random random = new Random();
         currentWordPosition = random.nextInt(engWordsLevelTwo.size());
     }
-    public void changeCurrentLevelThreeWord(){
+
+    public void changeCurrentLevelThreeWord() {
         Random random = new Random();
         currentWordPosition = random.nextInt(engWordsLevelThree.size());
     }
@@ -159,34 +165,33 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     public void onSendData(String data) {
         switch (data) {
             case "SuccessLevelOne":
-                myDB.update(getLevelOneWord(), myDB.getProgress(getLevelOneWord())+ scoreAddPoint);
-                int progress=myDB.getProgress(getLevelOneWord());
+                myDB.update(getLevelOneWord(), myDB.getProgress(getLevelOneWord()) + scoreAddPoint);
+                int progress = myDB.getProgress(getLevelOneWord());
                 pbHorizontal.setVisibility(View.VISIBLE);
-                progressForBar+=10;
+                progressForBar += 10;
                 pbHorizontal.setProgress(progressForBar);
-                if(progress>=pointToLevelTwo){
+                if (progress >= pointToLevelTwo) {
                     engWordsLevelOne.remove(getLevelOneWord());
-                    if (engWordsLevelOne.size()>=1) {
+                    if (engWordsLevelOne.size() >= 1) {
                         Random random = new Random();
                         currentWordPosition = random.nextInt(engWordsLevelOne.size());
                         fragmentLevelOne.setWord(engWordsLevelOne.get(currentWordPosition));
-                    }
-                    else if(engWordsLevelOne.size()==0){
-                        if(engWordsLevelTwo.size()==0){
-                            progressForBar=0;
+                    } else if (engWordsLevelOne.size() == 0) {
+                        if (engWordsLevelTwo.size() == 0) {
+                            progressForBar = 0;
                             pbHorizontal.setEnabled(false);
                             pbHorizontal.setVisibility(View.INVISIBLE);
-                            Intent intent = new Intent(PlayActivity.this, AddActivity.class);
+                            Statistics.setLessonCompleted();
+                            Intent intent = new Intent(PlayActivity.this, StatisticsActivity.class);
                             startActivity(intent);
-                        }else {
-                            currentWordPosition=0;
-                            progressForBar=0;
+                        } else {
+                            currentWordPosition = 0;
+                            progressForBar = 0;
                             pbHorizontal.setProgress(progressForBar);
                             changeFragment(fragmentLevelTwo);
                         }
                     }
-                }
-                else {
+                } else {
                     Random random = new Random();
                     currentWordPosition = random.nextInt(engWordsLevelOne.size());
                     fragmentLevelOne.setWord(engWordsLevelOne.get(currentWordPosition));
@@ -196,70 +201,62 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                 fragmentLevelOne.setTranslate(getStringFromCursor(myDB.getRusWord(engWordsLevelOne.get(currentWordPosition))));
                 break;
             case "SuccessLevelTwo":
-                myDB.update(getLevelTwoWord(), myDB.getProgress(getLevelTwoWord())+ scoreAddPoint);
-                int progressLevelTwo=myDB.getProgress(getLevelTwoWord());
+                myDB.update(getLevelTwoWord(), myDB.getProgress(getLevelTwoWord()) + scoreAddPoint);
+                int progressLevelTwo = myDB.getProgress(getLevelTwoWord());
                 pbHorizontal.setVisibility(View.VISIBLE);
-                progressForBar+=5;
+                progressForBar += 5;
                 pbHorizontal.setProgress(progressForBar);
-                if(progressLevelTwo>=pointToLevelThree){
+                if (progressLevelTwo >= pointToLevelThree) {
                     engWordsLevelTwo.remove(getLevelTwoWord());
-                    if (engWordsLevelTwo.size()>=1) {
+                    if (engWordsLevelTwo.size() >= 1) {
                         Random random = new Random();
                         currentWordPosition = random.nextInt(engWordsLevelTwo.size());
                         fragmentLevelTwo.setWord(engWordsLevelTwo.get(currentWordPosition), getTranslateForLevelTwo());
-                    }
-                    else if(engWordsLevelTwo.size()==0){
-                        if(engWordsLevelThree.size()==0){
-                            progressForBar=0;
+                    } else if (engWordsLevelTwo.size() == 0) {
+                        if (engWordsLevelThree.size() == 0) {
+                            progressForBar = 0;
                             pbHorizontal.setEnabled(false);
                             pbHorizontal.setVisibility(View.INVISIBLE);
-                            Intent intent = new Intent(PlayActivity.this, AddActivity.class);
+                            Statistics.setLessonCompleted();
+                            Intent intent = new Intent(PlayActivity.this, StatisticsActivity.class);
                             startActivity(intent);
-                        }else {
-                            currentWordPosition=0;
-                            progressForBar=0;
+                        } else {
+                            currentWordPosition = 0;
+                            progressForBar = 0;
                             pbHorizontal.setProgress(progressForBar);
                             changeFragment(fragmentLevelThree);
                         }
                     }
-                }
-                else {
+                } else {
                     Random random = new Random();
                     currentWordPosition = random.nextInt(engWordsLevelTwo.size());
                     fragmentLevelTwo.setWord(engWordsLevelTwo.get(currentWordPosition), getTranslateForLevelTwo());
                 }
                 break;
             case "FailLevelTwo":
-               // myDB.Update(GetLevelOneWord(), myDB.GetProgress(GetLevelOneWord())-ScoreRemovePoint);
+                // myDB.Update(GetLevelOneWord(), myDB.GetProgress(GetLevelOneWord())-ScoreRemovePoint);
                 break;
-            case  "SuccessLevelThree":
-                myDB.update(getLevelThreeWord(), myDB.getProgress(getLevelThreeWord())+ scoreAddPoint);
-                int progressLevelThree=myDB.getProgress(getLevelThreeWord());
-                progressForBar+=5;
+            case "SuccessLevelThree":
+                myDB.update(getLevelThreeWord(), myDB.getProgress(getLevelThreeWord()) + scoreAddPoint);
+                int progressLevelThree = myDB.getProgress(getLevelThreeWord());
+                progressForBar += 5;
                 pbHorizontal.setProgress(progressForBar);
-                if(progressLevelThree>=pointToEnd){
+                if (progressLevelThree >= pointToEnd) {
                     engWordsLevelThree.remove(getLevelThreeWord());
-                    if (engWordsLevelThree.size()>=1) {
+                    Statistics.setWordsLearned();
+                    if (engWordsLevelThree.size() >= 1) {
                         Random random = new Random();
                         currentWordPosition = random.nextInt(engWordsLevelThree.size());
                         fragmentLevelThree.setWord(engWordsLevelThree.get(currentWordPosition));
+                    } else if (engWordsLevelThree.size() == 0) {
+                        progressForBar = 0;
+                        pbHorizontal.setEnabled(false);
+                        pbHorizontal.setVisibility(View.INVISIBLE);
+                        Statistics.setLessonCompleted();
+                        Intent intent = new Intent(PlayActivity.this, StatisticsActivity.class);
+                        startActivity(intent);
                     }
-                    else if(engWordsLevelThree.size()==0){
-                        if(engWordsLevelThree.size()==0){
-                            progressForBar=0;
-                            pbHorizontal.setEnabled(false);
-                            pbHorizontal.setVisibility(View.INVISIBLE);
-                            Intent intent = new Intent(PlayActivity.this, AddActivity.class);
-                            startActivity(intent);
-                        }else {
-                            progressForBar=0;
-                            pbHorizontal.setProgress(progressForBar);
-                            currentWordPosition=0;
-                            changeFragment(fragmentLevelOne);
-                        }
-                    }
-                }
-                else {
+                } else {
                     Random random = new Random();
                     currentWordPosition = random.nextInt(engWordsLevelThree.size());
                     fragmentLevelThree.setWord(engWordsLevelThree.get(currentWordPosition));

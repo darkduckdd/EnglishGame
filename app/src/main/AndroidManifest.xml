@@ -11,6 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
         <activity
+            android:name=".StatisticsActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true" >
             <intent-filter>
@@ -22,11 +25,10 @@
         <activity
             android:name=".AddActivity"
             android:label="Add Dictionary"
-            android:parentActivityName=".PlayActivity" />
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".PlayActivity"
             android:label="English Game" >
-
         </activity>
     </application>
 
