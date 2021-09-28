@@ -49,6 +49,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("select RussianWord from Dictionary where EnglishWord = ?", new String[]{word});
         return cursor;
     }
+    public Cursor getEngWord(String word) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select EnglishWord from Dictionary where RussianWord = ?", new String[]{word});
+        return cursor;
+    }
 
     public void update(String word, int value) {
         SQLiteDatabase db = this.getWritableDatabase();

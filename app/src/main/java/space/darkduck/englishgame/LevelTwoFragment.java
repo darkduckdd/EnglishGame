@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,15 +26,17 @@ public class LevelTwoFragment extends Fragment {
     private Button button1, button2, button3, button4;
     private TextView text;
     private PlayActivity activity;
-    private ArrayList<String> rusWords = new ArrayList<>();
     private ArrayList<Button> buttons = new ArrayList<>();
+    private ArrayList<String> listWord = new ArrayList();
+    private ArrayList<String> listTranslateWord=new ArrayList();
+    private  int currentPosition;
 
     private void setTextButtons(List<Button> buttonList, String translate) {
         Set<String> strGenerated=new HashSet<>();
         Random r = new Random();
         strGenerated.add(translate);
         while (strGenerated.size() < buttonList.size()) {
-            strGenerated.add(rusWords.get(r.nextInt(rusWords.size())));
+            strGenerated.add(listTranslateWord.get(r.nextInt(listTranslateWord.size())));
         }
         TreeSet myTreeSet = new TreeSet();
         myTreeSet.addAll(strGenerated);
@@ -42,6 +45,55 @@ public class LevelTwoFragment extends Fragment {
             buttonList.get(i).setText(strIterator.next());
         }
     }
+
+    void checkClick(Button button) {
+        if (button.getText().equals(activity.getTranslateWord(text.getText().toString()))) {
+            activity.addProgress(10);
+            listWord.remove(text.getText());
+            if(listWord.size()==0){
+                fragmentSendDataListener.onSendData("SuccessLevelTwo");
+            }else if(listWord.size()==1){
+                currentPosition=0;
+                text.setText(listWord.get(currentPosition));
+                setTextButtons(buttons,activity.getTranslateWord(text.getText().toString()));
+            }
+            else {
+                Random random = new Random();
+                currentPosition= random.nextInt(listWord.size());
+                text.setText(listWord.get(currentPosition));
+                setTextButtons(buttons,activity.getTranslateWord(text.getText().toString()));
+            }
+        } else {
+            //fragmentSendDataListener.onSendData("FailLevelTwo");
+            Random random = new Random();
+            currentPosition= random.nextInt(listWord.size());
+            text.setText(listWord.get(currentPosition));
+            setTextButtons(buttons,activity.getTranslateWord(text.getText().toString()));
+        }
+    }
+
+    private void init(View view){
+        text = view.findViewById(R.id.textView);
+        button1 = view.findViewById(R.id.button);
+        button2 = view.findViewById(R.id.button2);
+        button3 = view.findViewById(R.id.button3);
+        button4 = view.findViewById(R.id.button4);
+        buttons.addAll(Arrays.asList(button1, button2, button3, button4));
+
+        activity = (PlayActivity) getActivity();
+        listWord.addAll(activity.getListWordsLevelTwo());
+        listTranslateWord.addAll(activity.getTranslatedListWordsLevelTwo());
+        Random random = new Random();
+        currentPosition= random.nextInt(listWord.size());
+        text.setText(listWord.get(currentPosition));
+        setTextButtons(buttons,activity.getTranslateWord(text.getText().toString()));
+        for (Button btn : buttons) {
+            btn.setOnClickListener((v) -> {
+                checkClick(btn);
+            });
+        }
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,46 +114,8 @@ public class LevelTwoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level_two, container, false);
-        text = view.findViewById(R.id.textView);
-        button1 = view.findViewById(R.id.button);
-        button2 = view.findViewById(R.id.button2);
-        button3 = view.findViewById(R.id.button3);
-        button4 = view.findViewById(R.id.button4);
-        buttons.addAll(Arrays.asList(button1, button2, button3, button4));
-        for (Button btn : buttons) {
-            btn.setOnClickListener((v) -> {
-                checkClick(btn, activity.getTranslateForLevelTwo());
-            });
-        }
-        activity = (PlayActivity) getActivity();
-        text.setText(activity.getLevelTwoWord());
-        rusWords.addAll(activity.getListRusWords());
-        setTextButtons(buttons, activity.getTranslateForLevelTwo());
+        init(view);
         return view;
     }
 
-
-    void checkClick(Button button, String str) {
-        if (button.getText().equals(str)) {
-            fragmentSendDataListener.onSendData("SuccessLevelTwo");
-            //button.setBackgroundColor(Color.GREEN);
-        } else {
-            for(Button btn:buttons){
-                if(btn.getText().equals(str)){
-                    //btn.setBackgroundColor(Color.GREEN);
-                }else {
-                   // btn.setBackgroundColor(Color.RED);
-                }
-            }
-            fragmentSendDataListener.onSendData("FailLevelTwo");
-            activity.changeCurrentLevelTwoWord();
-            setWord(activity.getLevelTwoWord(),activity.getTranslateForLevelTwo());
-
-        }
-    }
-
-    public void setWord(String str, String translate) {
-        text.setText(str);
-        setTextButtons(buttons, translate);
-    }
 }
