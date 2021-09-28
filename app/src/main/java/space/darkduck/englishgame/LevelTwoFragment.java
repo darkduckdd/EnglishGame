@@ -47,7 +47,7 @@ public class LevelTwoFragment extends Fragment {
     }
 
     void checkClick(Button button) {
-        if (button.getText().equals(activity.getTranslateWord(text.getText().toString()))) {
+       /* if (button.getText().equals(activity.getTranslateWord(text.getText().toString()))) {
             activity.addProgress(10);
             listWord.remove(text.getText());
             if(listWord.size()==0){
@@ -69,7 +69,7 @@ public class LevelTwoFragment extends Fragment {
             currentPosition= random.nextInt(listWord.size());
             text.setText(listWord.get(currentPosition));
             setTextButtons(buttons,activity.getTranslateWord(text.getText().toString()));
-        }
+        }*/
     }
 
     private void init(View view){
@@ -81,12 +81,12 @@ public class LevelTwoFragment extends Fragment {
         buttons.addAll(Arrays.asList(button1, button2, button3, button4));
 
         activity = (PlayActivity) getActivity();
-        listWord.addAll(activity.getListWordsLevelTwo());
+       /* listWord.addAll(activity.getListWordsLevelTwo());
         listTranslateWord.addAll(activity.getTranslatedListWordsLevelTwo());
         Random random = new Random();
         currentPosition= random.nextInt(listWord.size());
         text.setText(listWord.get(currentPosition));
-        setTextButtons(buttons,activity.getTranslateWord(text.getText().toString()));
+        setTextButtons(buttons,activity.getTranslateWord(text.getText().toString()));*/
         for (Button btn : buttons) {
             btn.setOnClickListener((v) -> {
                 checkClick(btn);

@@ -23,10 +23,25 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private int minPointsForLevelTwo=20;
     private int minPointsForLevelThree =60;
     private int maxWords=10;
+    private int minId=Statistics.getMinId();
+    private int maxId=Statistics.getMaxId();
 
     MyDatabaseHelper(@Nullable Context context) {
         super(context, databaseName, null, databaseVersion);
         this.context = context;
+    }
+
+    public static String getColumnId(){
+        return columnId;
+    }
+    public static String getColumnEngWord(){
+        return columnEngWord;
+    }
+    public static String getColumnRusWord(){
+        return columnRusWord;
+    }
+    public static String getColumnProgress(){
+        return columnProgress;
     }
 
     void addDictionary (String engWord, String rusWord, int prog) {
@@ -42,6 +57,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context, "Added successfully", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public Cursor getLevelWords(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select * from Dictionary where Id >= ? and Id<= ?", new String[]{String.valueOf(minId),String.valueOf(maxId)});
+        return cursor;
     }
 
     public Cursor getRusWord(String word) {
@@ -62,7 +83,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.update(tableName, cv, columnEngWord + "=? or "+columnRusWord+"=?", new String[]{word});
     }
 
-    public Cursor getWordsForLevelOne() {
+   /* public Cursor getWordsForLevelOne() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select EnglishWord from Dictionary where Progress >= ? and Progress< ? order by random() limit "+maxWords, new String[]{String.valueOf(minPoint),String.valueOf(minPointsForLevelTwo)});
         return cursor;
@@ -76,7 +97,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select EnglishWord from Dictionary where Progress >= ? and Progress< ? order by random() limit "+maxWords, new String[]{String.valueOf(minPointsForLevelThree),String.valueOf(maxPoint)});
         return cursor;
-    }
+    }*/
     public int getProgress(String word){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select Progress from Dictionary where EnglishWord = ?", new String[]{word});

@@ -25,11 +25,8 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     private final int scoreAddPoint = 20;
     private int progressForBar = 0;
     private ArrayList<String> engWordsLevelOne = new ArrayList();
-    private ArrayList<String> rusWordsLevelOne=new ArrayList<>();
     private ArrayList<String> engWordsLevelTwo = new ArrayList();
-    private ArrayList<String> rusWordsLevelTwo = new ArrayList();
     private ArrayList<String> engWordsLevelThree = new ArrayList();
-    private ArrayList<String> rusWordsLevelThree = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,16 +36,18 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
         pbHorizontal = findViewById(R.id.progressBar);
         pbHorizontal.setProgress(progressForBar);
         pbHorizontal.setVisibility(View.INVISIBLE);
-        getEngWordsAndSaveInArray(myDB, engWordsLevelOne, 1);
-        getRusWordsAndSaveInArray(myDB,engWordsLevelOne,rusWordsLevelOne);
-        getEngWordsAndSaveInArray(myDB, engWordsLevelTwo, 2);
-        getRusWordsAndSaveInArray(myDB, engWordsLevelTwo, rusWordsLevelTwo);
-        getEngWordsAndSaveInArray(myDB, engWordsLevelThree, 3);
-        getRusWordsAndSaveInArray(myDB, engWordsLevelThree, rusWordsLevelThree);
+
         fragmentLevelOne = new LevelOneFragment();
         fragmentLevelTwo = new LevelTwoFragment();
         fragmentLevelThree = new LevelThreeFragment();
-        if (engWordsLevelOne.size() > 0) {
+        Cursor cursor=myDB.getLevelWords();
+        Log.d("Cursa","Count:"+cursor.getCount());
+        cursor.moveToFirst();
+        do {
+            String strings=cursor.getString(cursor.getColumnIndex(MyDatabaseHelper.getColumnEngWord()));
+            Log.d("Cursa","ID: "+strings);
+        }while (cursor.moveToNext());
+       /* if (engWordsLevelOne.size() > 0) {
             pbHorizontal.setVisibility(View.VISIBLE);
             pbHorizontal.setProgress(0);
             changeFragment(fragmentLevelOne);
@@ -62,31 +61,9 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
             changeFragment(fragmentLevelThree);
         } else {
             //TODO словать пустой надо дать пересылку на другой активити
-        }
+        }*/
     }
 
-    public ArrayList<String> getListWordLevelOne(){
-        return engWordsLevelOne;
-    }
-    public ArrayList<String> getTranslatedListWordLevelOne(){
-        return rusWordsLevelOne;
-    }
-    public ArrayList<String> getListWordsLevelTwo() {
-        return engWordsLevelTwo;
-    }
-
-    public ArrayList<String> getTranslatedListWordsLevelTwo() {
-        return rusWordsLevelTwo;
-    }
-    public ArrayList<String> getTranslatedListWordsLevelThree() {
-        return rusWordsLevelThree;
-    }
-    public String getTranslateWord(String engWord){
-        return  getStringFromCursor(myDB.getRusWord(engWord));
-    }
-    public String getWord(String rusWord){
-        return  getStringFromCursor(myDB.getEngWord(rusWord));
-    }
 
 
     public void addProgress(int value){
@@ -94,41 +71,6 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
         pbHorizontal.setProgress(progressForBar);
     }
 
-    private void getEngWordsAndSaveInArray(MyDatabaseHelper myDB, ArrayList<String> levelWords, int level) {
-        Cursor cursor;
-        switch (level) {
-            case 1:
-                cursor = myDB.getWordsForLevelOne();
-                break;
-            case 2:
-                cursor = myDB.getWordsForLevelTwo();
-                break;
-            case 3:
-                cursor = myDB.getWordsForLevelThree();
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + level);
-        }
-        if (cursor == null) {
-            //TODO когда уже все слова пройдены
-        } else {
-            if (cursor.moveToFirst()) {
-                String str;
-                do {
-                    str = "";
-                    for (String cn : cursor.getColumnNames()) {
-                        levelWords.add(cursor.getString(cursor.getColumnIndex(cn)));
-                    }
-                } while (cursor.moveToNext());
-            }
-        }
-    }
-
-    private void getRusWordsAndSaveInArray(MyDatabaseHelper myDB, ArrayList<String> engWords, ArrayList<String> rusWords) {
-        for (String str : engWords) {
-            rusWords.add(getStringFromCursor(myDB.getRusWord(str)));
-        }
-    }
 
     private String getStringFromCursor(Cursor cursor) {
         if (cursor.moveToFirst()) {

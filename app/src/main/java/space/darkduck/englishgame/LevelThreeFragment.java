@@ -31,13 +31,12 @@ public class LevelThreeFragment extends Fragment {
         text=view.findViewById(R.id.textView);
         edit=view.findViewById(R.id.editText);
         button=view.findViewById(R.id.button);
-        listTranslatedWord.addAll(activity.getTranslatedListWordsLevelThree());
+       // listTranslatedWord.addAll(activity.getTranslatedListWordsLevelThree());
         Random random = new Random();
         currentPosition= random.nextInt(listTranslatedWord.size());
         text.setText(listTranslatedWord.get(currentPosition));
         button.setOnClickListener((v)->{
-            Log.d("resultTest",activity.getWord(text.getText().toString()));
-            if(edit.getText().toString().equals(activity.getWord(text.getText().toString()))){
+           /* if(edit.getText().toString().equals(activity.getWord(text.getText().toString()))){
                 activity.addProgress(10);
                 listTranslatedWord.remove(text.getText().toString());
                 if(listTranslatedWord.size()==0){
@@ -58,7 +57,7 @@ public class LevelThreeFragment extends Fragment {
                 text.setText(listTranslatedWord.get(currentPosition));
                 edit.setText("");
                 fragmentSendDataListener.onSendData("FailLevelThree");
-            }
+            }*/
         });
     }
 

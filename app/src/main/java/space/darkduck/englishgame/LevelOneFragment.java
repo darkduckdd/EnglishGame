@@ -68,8 +68,8 @@ public class LevelOneFragment extends Fragment {
         activity=(PlayActivity) getActivity();
         nextButton.setVisibility(View.INVISIBLE);
         nextButton.setEnabled(false);
-        listWord.addAll(activity.getListWordLevelOne());
-        listTranslateWord= activity.getTranslatedListWordLevelOne();
+        //listWord.addAll(activity.getListWordLevelOne());
+        //listTranslateWord= activity.getTranslatedListWordLevelOne();
         Random random = new Random();
         currentPosition= random.nextInt(listWord.size());
     }
