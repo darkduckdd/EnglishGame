@@ -1,15 +1,12 @@
 package space.darkduck.englishgame;
 
 import android.animation.ValueAnimator;
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 
 public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.ProgressHolder> {
@@ -33,7 +30,6 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
     public void onBindViewHolder(@NonNull ProgressHolder holder, int position) {
         holder.word.setText(listWords.get(position));
         holder.oldProgress.setText(String.valueOf(listOldProgress.get(position)));
-        //holder.newProgress.setText(String.valueOf(listOldProgress.get(position)));
         startCountAnimation(holder.newProgress,listOldProgress.get(position),listNewProgress.get(position));
     }
 
@@ -49,7 +45,6 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
             word=itemView.findViewById(R.id.textWord);
             oldProgress=itemView.findViewById(R.id.textOldProgress);
             newProgress=itemView.findViewById(R.id.textNewProgress);
-
         }
     }
     private void startCountAnimation(TextView text, int start,int end) {
