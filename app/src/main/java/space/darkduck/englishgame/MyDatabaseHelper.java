@@ -68,12 +68,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
         return number;
     }
-    public void updateProgress(String id, int value) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put(columnProgress, value);
-        db.update(tableName, cv, columnId + "=?", new String[]{id});
-    }
 
     public Cursor getWordsForLevelOne() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -90,6 +84,22 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("select Id from Dictionary where Progress >= ? and Progress< ? order by random() limit "+maxWords, new String[]{String.valueOf(minPointsForLevelThree),String.valueOf(maxPoint)});
         return cursor;
     }
+    public int getMaxId(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select Id from Dictionary where Id= (select MAX(Id) from Dictionary)",null);
+        cursor.moveToFirst();
+        int number=cursor.getInt(cursor.getColumnIndex(columnId));
+        cursor.close();
+        return number;
+    }
+
+    public void updateProgress(String id, int value) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(columnProgress, value);
+        db.update(tableName, cv, columnId + "=?", new String[]{id});
+    }
+
 
     private  void addStartWord(SQLiteDatabase db, String engWord, String rusWord, int progress){
         ContentValues cv = new ContentValues();
@@ -120,7 +130,6 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 columnRusWord + " TEXT, " +
                 columnProgress + " INTEGER);";
         db.execSQL(query);
-
         addStartWord(db,"mather","мама",0);
         addStartWord(db,"father","отец",0);
         addStartWord(db,"time","время",0);

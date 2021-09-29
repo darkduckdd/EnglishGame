@@ -20,8 +20,8 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     private LevelOneFragment fragmentLevelOne;
     private LevelTwoFragment fragmentLevelTwo;
     private LevelThreeFragment fragmentLevelThree;
+    private ProgressFragment fragmentProgress;
     private Cursor cursorLOne, cursorLTwo, cursorLThree;
-    private int currentWordPosition = 0;
     private final int scoreAddPoint = 20;
     private int progressForBar = 0;
     private ArrayList<Integer> listOneIDS = new ArrayList<>();
@@ -35,12 +35,16 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
         fragmentLevelOne = new LevelOneFragment();
         fragmentLevelTwo = new LevelTwoFragment();
         fragmentLevelThree = new LevelThreeFragment();
+        fragmentProgress=new ProgressFragment();
         cursorLOne = myDB.getWordsForLevelOne();
         cursorLTwo = myDB.getWordsForLevelTwo();
         cursorLThree = myDB.getWordsForLevelThree();
         addIDToList(cursorLOne, listOneIDS);
         addIDToList(cursorLTwo, listTwoIDS);
         addIDToList(cursorLThree, listThreeIDS);
+        cursorLOne.close();
+        cursorLTwo.close();
+        cursorLThree.close();
     }
 
     @Override
@@ -119,16 +123,23 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
         switch (data) {
             case "SuccessLevelOne":
                 if (listTwoIDS.size() == 0 && listThreeIDS.size() == 0) {
+                    Statistics.setLessonCompleted();
                     Intent intent = new Intent(PlayActivity.this, MainActivity.class);
                     startActivity(intent);
-                } else {
+                } else if(listTwoIDS.size()!=0 && listThreeIDS.size()==0) {
                     progressForBar=0;
                     pbHorizontal.setProgress(0);
                     changeFragment(fragmentLevelTwo);
                 }
+                else {
+                    progressForBar=0;
+                    pbHorizontal.setProgress(0);
+                    changeFragment(fragmentLevelThree);
+                }
                 break;
             case "SuccessLevelTwo":
                 if (listThreeIDS.size() == 0) {
+                    Statistics.setLessonCompleted();
                     Intent intent = new Intent(PlayActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else {
@@ -141,6 +152,7 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                 pbHorizontal.setProgress(0);
                 pbHorizontal.setEnabled(false);
                 pbHorizontal.setVisibility(View.INVISIBLE);
+                Statistics.setLessonCompleted();
                 Intent intent = new Intent(PlayActivity.this, MainActivity.class);
                 startActivity(intent);
                 break;
