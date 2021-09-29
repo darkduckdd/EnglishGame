@@ -2,16 +2,13 @@ package space.darkduck.englishgame;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -27,16 +24,16 @@ public class LevelTwoFragment extends Fragment {
     private TextView text;
     private PlayActivity activity;
     private ArrayList<Button> buttons = new ArrayList<>();
-    private ArrayList<String> listWord = new ArrayList();
-    private ArrayList<String> listTranslateWord=new ArrayList();
-    private  int currentPosition;
+    private ArrayList<Integer> listID = new ArrayList<>();
+    private ArrayList<Integer> listIDCopy = new ArrayList<>();
+    private int currentPosition;
 
-    private void setTextButtons(List<Button> buttonList, String translate) {
-        Set<String> strGenerated=new HashSet<>();
+    private void setTextButtons(List<Button> buttonList) {
+        Set<String> strGenerated = new HashSet<>();
         Random r = new Random();
-        strGenerated.add(translate);
+        strGenerated.add(activity.getRusWord(listID.get(currentPosition)));
         while (strGenerated.size() < buttonList.size()) {
-            strGenerated.add(listTranslateWord.get(r.nextInt(listTranslateWord.size())));
+            strGenerated.add(activity.getRusWord(listIDCopy.get(r.nextInt(listIDCopy.size()))));
         }
         TreeSet myTreeSet = new TreeSet();
         myTreeSet.addAll(strGenerated);
@@ -47,53 +44,57 @@ public class LevelTwoFragment extends Fragment {
     }
 
     void checkClick(Button button) {
-       /* if (button.getText().equals(activity.getTranslateWord(text.getText().toString()))) {
-            activity.addProgress(10);
-            listWord.remove(text.getText());
-            if(listWord.size()==0){
-                fragmentSendDataListener.onSendData("SuccessLevelTwo");
-            }else if(listWord.size()==1){
-                currentPosition=0;
-                text.setText(listWord.get(currentPosition));
-                setTextButtons(buttons,activity.getTranslateWord(text.getText().toString()));
-            }
-            else {
+        if (button.getText().equals(activity.getRusWord(listID.get(currentPosition)))) {
+            activity.addProgressBar(5);
+            activity.updateWordProgress(listID.get(currentPosition));
+            if (activity.getProgress(listID.get(currentPosition)) >= 60) {
+                listID.remove(currentPosition);
+                if (listID.size() == 0) {
+                    fragmentSendDataListener.onSendData("SuccessLevelTwo");
+                } else if (listID.size() == 1) {
+                    currentPosition = 0;
+                    text.setText(activity.getEngWord(listID.get(currentPosition)));
+                    setTextButtons(buttons);
+                } else {
+                    Random random = new Random();
+                    currentPosition = random.nextInt(listID.size());
+                    text.setText(activity.getEngWord(listID.get(currentPosition)));
+                    setTextButtons(buttons);
+                }
+            } else {
                 Random random = new Random();
-                currentPosition= random.nextInt(listWord.size());
-                text.setText(listWord.get(currentPosition));
-                setTextButtons(buttons,activity.getTranslateWord(text.getText().toString()));
+                currentPosition = random.nextInt(listID.size());
+                text.setText(activity.getEngWord(listID.get(currentPosition)));
+                setTextButtons(buttons);
             }
         } else {
-            //fragmentSendDataListener.onSendData("FailLevelTwo");
             Random random = new Random();
-            currentPosition= random.nextInt(listWord.size());
-            text.setText(listWord.get(currentPosition));
-            setTextButtons(buttons,activity.getTranslateWord(text.getText().toString()));
-        }*/
+            currentPosition = random.nextInt(listID.size());
+            text.setText(activity.getEngWord(listID.get(currentPosition)));
+            setTextButtons(buttons);
+        }
     }
 
-    private void init(View view){
+    private void init(View view) {
         text = view.findViewById(R.id.textView);
         button1 = view.findViewById(R.id.button);
         button2 = view.findViewById(R.id.button2);
         button3 = view.findViewById(R.id.button3);
         button4 = view.findViewById(R.id.button4);
         buttons.addAll(Arrays.asList(button1, button2, button3, button4));
-
         activity = (PlayActivity) getActivity();
-       /* listWord.addAll(activity.getListWordsLevelTwo());
-        listTranslateWord.addAll(activity.getTranslatedListWordsLevelTwo());
+        listID.addAll(activity.getListTwoIDS());
+        listIDCopy.addAll(listID);
         Random random = new Random();
-        currentPosition= random.nextInt(listWord.size());
-        text.setText(listWord.get(currentPosition));
-        setTextButtons(buttons,activity.getTranslateWord(text.getText().toString()));*/
+        currentPosition = random.nextInt(listID.size());
+        text.setText(activity.getEngWord(listID.get(currentPosition)));
+        setTextButtons(buttons);
         for (Button btn : buttons) {
             btn.setOnClickListener((v) -> {
                 checkClick(btn);
             });
         }
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -117,5 +118,4 @@ public class LevelTwoFragment extends Fragment {
         init(view);
         return view;
     }
-
 }

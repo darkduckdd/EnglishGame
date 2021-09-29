@@ -2,15 +2,13 @@ package space.darkduck.englishgame;
 
 import android.content.Context;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -19,8 +17,7 @@ public class LevelOneFragment extends Fragment {
     private TextView textView;
     private OnFragmentListener fragmentSendDataListener;
     private PlayActivity activity;
-    private ArrayList<String> listWord = new ArrayList();
-    private ArrayList<String> listTranslateWord=new ArrayList();
+    private ArrayList<Integer> listID = new ArrayList();
     private Button rightButton, mistakeButton,nextButton;
     private int currentPosition;
 
@@ -29,34 +26,39 @@ public class LevelOneFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_level_one, container, false);
         init(view);
-
+        textView.setText(activity.getEngWord(listID.get(currentPosition)));
         rightButton.setOnClickListener((v) -> {
-            activity.addProgress(10);
-            listWord.remove(textView.getText());
-            if(listWord.size()==0){
-                fragmentSendDataListener.onSendData("SuccessLevelOne");
-            }else if(listWord.size()==1){
-               currentPosition=0;
-               textView.setText(listWord.get(currentPosition));
-            }
-            else {
+            activity.addProgressBar(10);
+            activity.updateWordProgress(listID.get(currentPosition));
+            if(activity.getProgress(listID.get(currentPosition))>=20) {
+                listID.remove(currentPosition);
+                if (listID.size() == 0) {
+                    fragmentSendDataListener.onSendData("SuccessLevelOne");
+                } else if (listID.size() == 1) {
+                    currentPosition = 0;
+                    textView.setText(activity.getEngWord(listID.get(currentPosition)));
+                } else {
+                    Random random = new Random();
+                    currentPosition = random.nextInt(listID.size());
+                    textView.setText(activity.getEngWord(listID.get(currentPosition)));
+                }
+            }else {
                 Random random = new Random();
-                currentPosition= random.nextInt(listWord.size());
-                textView.setText(listWord.get(currentPosition));
+                currentPosition = random.nextInt(listID.size());
+                textView.setText(activity.getEngWord(listID.get(currentPosition)));
             }
         });
 
         mistakeButton.setOnClickListener((v) -> {
-            textView.setText(listTranslateWord.get(currentPosition));
+           textView.setText(activity.getRusWord(listID.get(currentPosition)));
             activeNextButton(true,View.VISIBLE,View.INVISIBLE);
         });
         nextButton.setOnClickListener((v) -> {
             Random random = new Random();
-            currentPosition= random.nextInt(listWord.size());
-            textView.setText(listWord.get(currentPosition));
+            currentPosition= random.nextInt(listID.size());
+            textView.setText(activity.getEngWord(listID.get(currentPosition)));
            activeNextButton(false,View.INVISIBLE,View.VISIBLE);
         });
-        textView.setText(listWord.get(currentPosition));
         return view;
     }
 
@@ -66,12 +68,11 @@ public class LevelOneFragment extends Fragment {
         rightButton = view.findViewById(R.id.rightButton);
         nextButton=view.findViewById(R.id.nextButton);
         activity=(PlayActivity) getActivity();
+        listID.addAll(activity.getListOneIDS());
         nextButton.setVisibility(View.INVISIBLE);
         nextButton.setEnabled(false);
-        //listWord.addAll(activity.getListWordLevelOne());
-        //listTranslateWord= activity.getTranslatedListWordLevelOne();
         Random random = new Random();
-        currentPosition= random.nextInt(listWord.size());
+        currentPosition= random.nextInt(listID.size());
     }
 
     @Override
@@ -88,6 +89,7 @@ public class LevelOneFragment extends Fragment {
             throw new ClassCastException(context.toString() + "должен реализовывать интерфейс OnFragmentListener");
         }
     }
+
     private void activeNextButton(boolean isActive,int visibleNext,int visibleOther){
         rightButton.setEnabled(!isActive);
         rightButton.setVisibility(visibleOther);
