@@ -1,56 +1,68 @@
 package space.darkduck.englishgame;
 
-import android.animation.ValueAnimator;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Debug;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class ProgressFragment extends Fragment {
+    private OnFragmentListener fragmentSendDataListener;
     private PlayActivity activity;
     private TextView text;
     private RecyclerView recyclerView;
+    private Button nextLevelButton;
     private ProgressAdapter progressAdapter;
     private ArrayList<Integer> progressID=new ArrayList<>(),oldProgress=new ArrayList<>(),newProgress=new ArrayList<>();
     private ArrayList<String> words=new ArrayList<>();
 
+    public void setDataRecyclerView(ArrayList<Integer> IDs,ArrayList<Integer> oldProgresses){
+        progressID.clear();
+        words.clear();
+        oldProgress.clear();
+        newProgress.clear();
+        progressID.addAll(IDs);
+        oldProgress.addAll(oldProgresses);
+    }
     private void init(View view){
         activity = (PlayActivity) getActivity();
         text = view.findViewById(R.id.textView);
         recyclerView=view.findViewById(R.id.recyclerView);
-        progressID.addAll(activity.getListOneIDS());
-        addWords();
+        nextLevelButton=view.findViewById(R.id.nextLevelButton);
+        addWordToList();
         progressAdapter=new ProgressAdapter(words,oldProgress,newProgress);
         recyclerView.setAdapter(progressAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        nextLevelButton.setOnClickListener((v)->{
+            fragmentSendDataListener.onSendData("NextLevel");
+        });
     }
-    private void addWords(){
+
+    private void addWordToList(){
         for(int num:progressID){
             words.add(activity.getEngWord(num));
-            oldProgress.add(num);
-            newProgress.add(num+20);
+            newProgress.add(activity.getProgress(num));
         }
     }
 
-    private void startCountAnimation() {
-        ValueAnimator animator = ValueAnimator.ofInt(0, 600); //0 is min number, 600 is max number
-        animator.setDuration(5000); //Duration is in milliseconds
-        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            public void onAnimationUpdate(ValueAnimator animation) {
-                text.setText(animation.getAnimatedValue().toString());
-            }
-        });
-        animator.start();
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            fragmentSendDataListener = (OnFragmentListener) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + "должен реализовывать интерфейс OnFragmentListener");
+        }
     }
 
     @Override

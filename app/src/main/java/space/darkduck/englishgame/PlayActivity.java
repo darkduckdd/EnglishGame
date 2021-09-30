@@ -24,9 +24,8 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     private Cursor cursorLOne, cursorLTwo, cursorLThree;
     private final int scoreAddPoint = 20;
     private int progressForBar = 0;
-    private ArrayList<Integer> listOneIDS = new ArrayList<>();
-    private ArrayList<Integer> listTwoIDS = new ArrayList<>();
-    private ArrayList<Integer> listThreeIDS = new ArrayList<>();
+    private ArrayList<Integer> listOneIDS = new ArrayList<>(), listTwoIDS = new ArrayList<>(),listThreeIDS = new ArrayList<>(),listProgresses=new ArrayList<>();
+    private boolean isCompletedOne=false,isCompletedTwo=false,isCompletedThree=false;
 
     private void init() {
         pbHorizontal = findViewById(R.id.progressBar);
@@ -54,14 +53,17 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
         myDB = new MyDatabaseHelper(PlayActivity.this);
         init();
         if (cursorLOne.getCount() != 0) {
+            listProgresses.addAll(getOldProgress(listOneIDS));
             pbHorizontal.setVisibility(View.VISIBLE);
             pbHorizontal.setProgress(0);
             changeFragment(fragmentLevelOne);
         } else if (cursorLTwo.getCount() != 0) {
+            listProgresses.addAll(getOldProgress(listTwoIDS));
             pbHorizontal.setVisibility(View.VISIBLE);
             pbHorizontal.setProgress(0);
             changeFragment(fragmentLevelTwo);
         } else if (cursorLThree.getCount() != 0) {
+            listProgresses.addAll(getOldProgress(listThreeIDS));
             pbHorizontal.setVisibility(View.VISIBLE);
             pbHorizontal.setProgress(0);
             changeFragment(fragmentLevelThree);
@@ -89,6 +91,13 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                 list.add(id);
             } while (cursor.moveToNext());
         }
+    }
+    private ArrayList<Integer> getOldProgress(ArrayList<Integer> id){
+        ArrayList<Integer> progresses=new ArrayList<>();
+        for(int num:id){
+            progresses.add(getProgress(num));
+        }
+        return progresses;
     }
 
     public String getEngWord(int id) {
@@ -122,39 +131,71 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     public void onSendData(String data) {
         switch (data) {
             case "SuccessLevelOne":
+                progressForBar=0;
+                pbHorizontal.setProgress(0);
+                pbHorizontal.setEnabled(false);
+                pbHorizontal.setVisibility(View.INVISIBLE);
+                isCompletedOne=true;
+                fragmentProgress.setDataRecyclerView(listOneIDS,listProgresses);
+                changeFragment(fragmentProgress);
+                break;
+            case "SuccessLevelTwo":
+                progressForBar=0;
+                pbHorizontal.setProgress(0);
+                pbHorizontal.setEnabled(false);
+                pbHorizontal.setVisibility(View.INVISIBLE);
+                isCompletedTwo=true;
+                fragmentProgress.setDataRecyclerView(listTwoIDS,listProgresses);
+                changeFragment(fragmentProgress);
+                break;
+            case "SuccessLevelThree":
+                progressForBar=0;
+                pbHorizontal.setProgress(0);
+                pbHorizontal.setEnabled(false);
+                pbHorizontal.setVisibility(View.INVISIBLE);
+                isCompletedThree=true;
+                fragmentProgress.setDataRecyclerView(listThreeIDS,listProgresses);
+                changeFragment(fragmentProgress);
+                Statistics.setLessonCompleted();
+                break;
+            case "NextLevel":
                 if (listTwoIDS.size() == 0 && listThreeIDS.size() == 0) {
                     Statistics.setLessonCompleted();
                     Intent intent = new Intent(PlayActivity.this, MainActivity.class);
                     startActivity(intent);
                 } else if(listTwoIDS.size()!=0 && listThreeIDS.size()==0) {
-                    progressForBar=0;
-                    pbHorizontal.setProgress(0);
-                    changeFragment(fragmentLevelTwo);
+                    if(isCompletedTwo){
+                        Statistics.setLessonCompleted();
+                        Intent intent = new Intent(PlayActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }else {
+                        progressForBar = 0;
+                        pbHorizontal.setProgress(0);
+                        pbHorizontal.setEnabled(true);
+                        pbHorizontal.setVisibility(View.VISIBLE);
+                        listProgresses.clear();
+                        listProgresses.addAll(getOldProgress(listTwoIDS));
+                        changeFragment(fragmentLevelTwo);
+                    }
                 }
-                else {
-                    progressForBar=0;
-                    pbHorizontal.setProgress(0);
-                    changeFragment(fragmentLevelThree);
-                }
-                break;
-            case "SuccessLevelTwo":
-                if (listThreeIDS.size() == 0) {
-                    Statistics.setLessonCompleted();
+                else if(listThreeIDS.size() !=0) {
+                    if(isCompletedThree){
+                        Statistics.setLessonCompleted();
+                        Intent intent = new Intent(PlayActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }else {
+                        progressForBar = 0;
+                        pbHorizontal.setProgress(0);
+                        pbHorizontal.setEnabled(true);
+                        pbHorizontal.setVisibility(View.VISIBLE);
+                        listProgresses.clear();
+                        listProgresses.addAll(getOldProgress(listThreeIDS));
+                        changeFragment(fragmentLevelThree);
+                    }
+                }else {
                     Intent intent = new Intent(PlayActivity.this, MainActivity.class);
                     startActivity(intent);
-                } else {
-                    progressForBar=0;
-                    pbHorizontal.setProgress(0);
-                    changeFragment(fragmentLevelThree);
                 }
-                break;
-            case "SuccessLevelThree":
-                pbHorizontal.setProgress(0);
-                pbHorizontal.setEnabled(false);
-                pbHorizontal.setVisibility(View.INVISIBLE);
-                Statistics.setLessonCompleted();
-                Intent intent = new Intent(PlayActivity.this, MainActivity.class);
-                startActivity(intent);
                 break;
         }
     }

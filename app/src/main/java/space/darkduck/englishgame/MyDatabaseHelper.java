@@ -34,15 +34,9 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static String getColumnId(){
         return columnId;
     }
-    public static String getColumnEngWord(){
-        return columnEngWord;
-    }
-    public static String getColumnRusWord(){
-        return columnRusWord;
-    }
-    public static String getColumnProgress(){
-        return columnProgress;
-    }
+    public static String getColumnEngWord(){return columnEngWord;}
+    public static String getColumnRusWord(){return  columnRusWord;}
+    public static String getColumnProgress(){return  columnProgress;}
 
     public String getRusWord(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -82,6 +76,11 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public Cursor getWordsForLevelThree() {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select Id from Dictionary where Progress >= ? and Progress< ? order by random() limit "+maxWords, new String[]{String.valueOf(minPointsForLevelThree),String.valueOf(maxPoint)});
+        return cursor;
+    }
+    public Cursor getAllWords(){
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor cursor=db.rawQuery("select EnglishWord, RussianWord,Progress from Dictionary",null);
         return cursor;
     }
     public int getMaxId(){
