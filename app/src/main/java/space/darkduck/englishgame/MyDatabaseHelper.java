@@ -78,11 +78,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("select Id from Dictionary where Progress >= ? and Progress< ? order by random() limit "+maxWords, new String[]{String.valueOf(minPointsForLevelThree),String.valueOf(maxPoint)});
         return cursor;
     }
-    public Cursor getAllWords(){
-        SQLiteDatabase db=this.getReadableDatabase();
-        Cursor cursor=db.rawQuery("select EnglishWord, RussianWord,Progress from Dictionary",null);
-        return cursor;
-    }
+
     public int getMaxId(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select Id from Dictionary where Id= (select MAX(Id) from Dictionary)",null);
