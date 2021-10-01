@@ -202,4 +202,9 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                 break;
         }
     }
+
+    @Override
+    public void onSendTwoWord(String endWord, String rusWord) {
+
+    }
 }
