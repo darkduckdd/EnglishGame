@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +35,7 @@ public class ProgressFragment extends Fragment {
     }
     private void init(View view){
         activity = (PlayActivity) getActivity();
-        text = view.findViewById(R.id.textView);
+        text = view.findViewById(R.id.wordLearned);
         recyclerView=view.findViewById(R.id.recyclerView);
         nextLevelButton=view.findViewById(R.id.nextLevelButton);
         addWordToList();

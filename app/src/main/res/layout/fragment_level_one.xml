@@ -7,11 +7,21 @@
     tools:context=".LevelOneFragment">
 
     <TextView
+        android:id="@+id/textView2"
+        android:layout_width="304dp"
+        android:layout_height="66dp"
+        android:gravity="center"
+        android:text="Level 1"
+        android:textSize="48sp"
+        tools:layout_editor_absoluteX="56dp"
+        tools:layout_editor_absoluteY="36dp" />
+
+    <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="121dp"
-        android:layout_marginTop="216dp"
+        android:layout_marginTop="264dp"
         android:layout_marginEnd="159dp"
         android:text="@string/hello_blank_fragment"
         android:textSize="34sp"
@@ -24,8 +34,8 @@
         android:id="@+id/mistakeButton"
         android:layout_width="120dp"
         android:layout_height="70dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginBottom="164dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginBottom="92dp"
         android:text="Не знаю"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -35,7 +45,7 @@
         android:layout_width="120dp"
         android:layout_height="70dp"
         android:layout_marginEnd="56dp"
-        android:layout_marginBottom="164dp"
+        android:layout_marginBottom="92dp"
         android:text="Далее"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -45,7 +55,7 @@
         android:layout_width="120dp"
         android:layout_height="70dp"
         android:layout_marginEnd="56dp"
-        android:layout_marginBottom="164dp"
+        android:layout_marginBottom="92dp"
         android:text="Знаю"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

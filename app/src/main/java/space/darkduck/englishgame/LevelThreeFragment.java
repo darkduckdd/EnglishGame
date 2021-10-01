@@ -3,7 +3,7 @@ package space.darkduck.englishgame;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +25,7 @@ public class LevelThreeFragment extends Fragment {
 
     private void init(View view) {
         activity = (PlayActivity) getActivity();
-        text = view.findViewById(R.id.textView);
+        text = view.findViewById(R.id.wordLearned);
         edit = view.findViewById(R.id.editText);
         button = view.findViewById(R.id.button);
         listID.addAll(activity.getListThreeIDS());

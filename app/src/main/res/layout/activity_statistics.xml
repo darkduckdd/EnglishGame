@@ -12,22 +12,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView"
-        android:textSize="34sp" />
+        android:text="Статистика"
+        android:textSize="48sp"
+        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/textView2"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="TextView"
-        android:textSize="34sp" />
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="TextView"
-        android:textSize="34sp" />
+        <TextView
+            android:id="@+id/lessonCompleted"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Пройдено уроков"
+            android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/wordLearned"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Слов выучено"
+            android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/maxWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Всего слов"
+            android:textSize="34sp" />
+
+        <TextView
+            android:id="@+id/wordLeft"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Слов осталось"
+            android:textSize="34sp" />
+    </LinearLayout>
+
 </LinearLayout>

@@ -3,7 +3,7 @@ package space.darkduck.englishgame;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +76,7 @@ public class LevelTwoFragment extends Fragment {
     }
 
     private void init(View view) {
-        text = view.findViewById(R.id.textView);
+        text = view.findViewById(R.id.wordLearned);
         button1 = view.findViewById(R.id.button);
         button2 = view.findViewById(R.id.button2);
         button3 = view.findViewById(R.id.button3);
