@@ -5,23 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class WordAdapter  extends RecyclerView.Adapter<WordAdapter.WordHolder> {
     private Context context;
     private ArrayList<String> listEngWord,listRusWord;
-    private ArrayList<Integer> listProgress;
+    private ArrayList<Integer> listID;
 
-    public WordAdapter(Context context, ArrayList<String> listEngWord, ArrayList<String> listRusWord, ArrayList<Integer> listProgress){
+    public WordAdapter(Context context,ArrayList<Integer>listID ,ArrayList<String> listEngWord, ArrayList<String> listRusWord){
         this.context=context;
         this.listEngWord=listEngWord;
         this.listRusWord=listRusWord;
-        this.listProgress=listProgress;
+        this.listID=listID;
     }
 
     @NonNull
@@ -34,9 +31,9 @@ public class WordAdapter  extends RecyclerView.Adapter<WordAdapter.WordHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull WordAdapter.WordHolder holder, int position) {
+        holder.idText.setText(String.valueOf(listID.get(position)));
         holder.engText.setText(listEngWord.get(position));
         holder.rusText.setText(listRusWord.get(position));
-        holder.progressText.setText(String.valueOf(listProgress.get(position)));
     }
 
     @Override
@@ -44,12 +41,12 @@ public class WordAdapter  extends RecyclerView.Adapter<WordAdapter.WordHolder> {
         return listEngWord.size();
     }
     public static class WordHolder extends RecyclerView.ViewHolder{
-        private TextView engText,rusText,progressText;
+        private TextView idText,engText,rusText;
         public WordHolder(@NonNull View itemView) {
             super(itemView);
+            idText=itemView.findViewById(R.id.idText);
             engText=itemView.findViewById(R.id.textViewEngWord);
             rusText=itemView.findViewById(R.id.textViewRusWord);
-            progressText=itemView.findViewById(R.id.textViewProgress);
         }
     }
 }

@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-public class MyDatabaseHelper extends SQLiteOpenHelper {
+public class DatabaseHelper extends SQLiteOpenHelper {
     private Context context;
     private static final String databaseName = "EnglishRussianDictionary.db";
     private static final int databaseVersion = 1;
@@ -23,10 +23,8 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private int minPointsForLevelTwo=20;
     private int minPointsForLevelThree =60;
     private int maxWords=10;
-    private int minId=Statistics.getMinId();
-    private int maxId=Statistics.getMaxId();
 
-    MyDatabaseHelper(@Nullable Context context) {
+    DatabaseHelper(@Nullable Context context) {
         super(context, databaseName, null, databaseVersion);
         this.context = context;
     }
@@ -37,6 +35,12 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     public static String getColumnEngWord(){return columnEngWord;}
     public static String getColumnRusWord(){return  columnRusWord;}
     public static String getColumnProgress(){return  columnProgress;}
+
+    public Cursor getAllData(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select Id, EnglishWord, RussianWord  from Dictionary",null);
+        return cursor;
+    }
 
     public String getRusWord(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -88,6 +92,15 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return number;
     }
 
+    public  boolean isHasInDatabase(String word){
+        SQLiteDatabase db=this.getReadableDatabase();
+        Cursor cursor=db.rawQuery("select EnglishWord from Dictionary where EnglishWord=?",new String[]{word});
+        if(cursor.getCount()>0){
+            return true;
+        }
+        return false;
+    }
+
     public void updateProgress(String id, int value) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -95,15 +108,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         db.update(tableName, cv, columnId + "=?", new String[]{id});
     }
 
-
-    private  void addStartWord(SQLiteDatabase db, String engWord, String rusWord, int progress){
-        ContentValues cv = new ContentValues();
-        cv.put(columnEngWord, engWord);
-        cv.put(columnRusWord, rusWord);
-        cv.put(columnProgress, progress);
-        db.insert(tableName, null, cv);
-    }
-    void addDictionary (String engWord, String rusWord, int prog) {
+    public void addDictionary (String engWord, String rusWord, int prog) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
 
@@ -116,6 +121,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context, "Added successfully", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private  void addStartWord(SQLiteDatabase db, String engWord, String rusWord, int progress){
+        ContentValues cv = new ContentValues();
+        cv.put(columnEngWord, engWord);
+        cv.put(columnRusWord, rusWord);
+        cv.put(columnProgress, progress);
+        db.insert(tableName, null, cv);
     }
 
     @Override

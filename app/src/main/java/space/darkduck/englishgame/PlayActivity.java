@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -16,7 +15,7 @@ import java.util.ArrayList;
 public class PlayActivity extends AppCompatActivity implements OnFragmentListener {
 
     private ProgressBar pbHorizontal;
-    private MyDatabaseHelper myDB;
+    private DatabaseHelper myDB;
     private LevelOneFragment fragmentLevelOne;
     private LevelTwoFragment fragmentLevelTwo;
     private LevelThreeFragment fragmentLevelThree;
@@ -50,7 +49,7 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_play);
-        myDB = new MyDatabaseHelper(PlayActivity.this);
+        myDB = new DatabaseHelper(PlayActivity.this);
         init();
         if (cursorLOne.getCount() != 0) {
             listProgresses.addAll(getOldProgress(listOneIDS));
@@ -87,7 +86,7 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     private void addIDToList(Cursor cursor, ArrayList<Integer> list) {
         if (cursor.moveToFirst()) {
             do {
-                int id = cursor.getInt(cursor.getColumnIndex(MyDatabaseHelper.getColumnId()));
+                int id = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.getColumnId()));
                 list.add(id);
             } while (cursor.moveToNext());
         }
@@ -163,11 +162,13 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                     Statistics.setLessonCompleted();
                     Intent intent = new Intent(PlayActivity.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                 } else if(listTwoIDS.size()!=0 && listThreeIDS.size()==0) {
                     if(isCompletedTwo){
                         Statistics.setLessonCompleted();
                         Intent intent = new Intent(PlayActivity.this, MainActivity.class);
                         startActivity(intent);
+                        finish();
                     }else {
                         progressForBar = 0;
                         pbHorizontal.setProgress(0);
@@ -183,6 +184,7 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                         Statistics.setLessonCompleted();
                         Intent intent = new Intent(PlayActivity.this, MainActivity.class);
                         startActivity(intent);
+                        finish();
                     }else {
                         progressForBar = 0;
                         pbHorizontal.setProgress(0);
@@ -195,6 +197,7 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                 }else {
                     Intent intent = new Intent(PlayActivity.this, MainActivity.class);
                     startActivity(intent);
+                    finish();
                 }
                 break;
         }
