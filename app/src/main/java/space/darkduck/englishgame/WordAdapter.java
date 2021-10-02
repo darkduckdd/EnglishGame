@@ -10,12 +10,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class WordAdapter  extends RecyclerView.Adapter<WordAdapter.WordHolder> {
-    private Context context;
     private ArrayList<String> listEngWord,listRusWord;
     private ArrayList<Integer> listID;
 
-    public WordAdapter(Context context,ArrayList<Integer>listID ,ArrayList<String> listEngWord, ArrayList<String> listRusWord){
-        this.context=context;
+    public WordAdapter(ArrayList<Integer>listID ,ArrayList<String> listEngWord, ArrayList<String> listRusWord){
         this.listEngWord=listEngWord;
         this.listRusWord=listRusWord;
         this.listID=listID;
@@ -24,7 +22,7 @@ public class WordAdapter  extends RecyclerView.Adapter<WordAdapter.WordHolder> {
     @NonNull
     @Override
     public WordAdapter.WordHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        LayoutInflater inflater=LayoutInflater.from(context);
+        LayoutInflater inflater=LayoutInflater.from(parent.getContext());
         View view=inflater.inflate(R.layout.word,parent,false);
         return new WordHolder(view);
     }

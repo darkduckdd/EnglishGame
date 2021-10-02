@@ -1,58 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:context=".StatisticsActivity">
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionBackButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Статистика"
-        android:textSize="48sp"
-        android:textStyle="bold" />
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="28dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".StatisticsActivity">
 
         <TextView
-            android:id="@+id/lessonCompleted"
+            android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Пройдено уроков"
-            android:textSize="34sp" />
+            android:text="Статистика"
+            android:textSize="48sp"
+            android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/wordLearned"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="Слов выучено"
-            android:textSize="34sp" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/maxWord"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Всего слов"
-            android:textSize="34sp" />
+            <TextView
+                android:id="@+id/lessonCompleted"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Пройдено уроков"
+                android:textSize="34sp" />
 
-        <TextView
-            android:id="@+id/wordLeft"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Слов осталось"
-            android:textSize="34sp" />
+            <TextView
+                android:id="@+id/wordLearned"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Слов выучено"
+                android:textSize="34sp" />
+
+            <TextView
+                android:id="@+id/maxWord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Всего слов"
+                android:textSize="34sp" />
+
+            <TextView
+                android:id="@+id/wordLeft"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Слов осталось"
+                android:textSize="34sp" />
+        </LinearLayout>
+
     </LinearLayout>
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
