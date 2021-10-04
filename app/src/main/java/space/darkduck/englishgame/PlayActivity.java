@@ -19,12 +19,13 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     private LevelOneFragment fragmentLevelOne;
     private LevelTwoFragment fragmentLevelTwo;
     private LevelThreeFragment fragmentLevelThree;
+    private LessonEndFragment fragmentLessonEnd;
     private ProgressFragment fragmentProgress;
     private Cursor cursorLOne, cursorLTwo, cursorLThree;
     private final int scoreAddPoint = 20;
     private int progressForBar = 0;
-    private ArrayList<Integer> listOneIDS = new ArrayList<>(), listTwoIDS = new ArrayList<>(),listThreeIDS = new ArrayList<>(),listProgresses=new ArrayList<>();
-    private boolean isCompletedOne=false,isCompletedTwo=false,isCompletedThree=false;
+    private ArrayList<Integer> listOneIDS = new ArrayList<>(), listTwoIDS = new ArrayList<>(), listThreeIDS = new ArrayList<>(), listProgresses = new ArrayList<>();
+    private boolean isCompletedTwo = false, isCompletedThree = false;
 
     private void init() {
         pbHorizontal = findViewById(R.id.progressBar);
@@ -33,7 +34,8 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
         fragmentLevelOne = new LevelOneFragment();
         fragmentLevelTwo = new LevelTwoFragment();
         fragmentLevelThree = new LevelThreeFragment();
-        fragmentProgress=new ProgressFragment();
+        fragmentProgress = new ProgressFragment();
+        fragmentLessonEnd = new LessonEndFragment();
         cursorLOne = myDB.getWordsForLevelOne();
         cursorLTwo = myDB.getWordsForLevelTwo();
         cursorLThree = myDB.getWordsForLevelThree();
@@ -67,7 +69,8 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
             pbHorizontal.setProgress(0);
             changeFragment(fragmentLevelThree);
         } else {
-            //TODO словать пустой надо дать пересылку на другой активити
+            fragmentLessonEnd.setEmptyTextView();
+            changeFragment(fragmentLessonEnd);
         }
     }
 
@@ -91,9 +94,10 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
             } while (cursor.moveToNext());
         }
     }
-    private ArrayList<Integer> getOldProgress(ArrayList<Integer> id){
-        ArrayList<Integer> progresses=new ArrayList<>();
-        for(int num:id){
+
+    private ArrayList<Integer> getOldProgress(ArrayList<Integer> id) {
+        ArrayList<Integer> progresses = new ArrayList<>();
+        for (int num : id) {
             progresses.add(getProgress(num));
         }
         return progresses;
@@ -127,49 +131,44 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     }
 
     @Override
-    public void onResultLevel (LevelResult result) {
+    public void onResultLevel(LevelResult result) {
         switch (result) {
             case LevelOneSuccess:
-                progressForBar=0;
+                progressForBar = 0;
                 pbHorizontal.setProgress(0);
                 pbHorizontal.setEnabled(false);
                 pbHorizontal.setVisibility(View.INVISIBLE);
-                isCompletedOne=true;
-                fragmentProgress.setDataRecyclerView(listOneIDS,listProgresses);
+                fragmentProgress.setDataRecyclerView(listOneIDS, listProgresses);
                 changeFragment(fragmentProgress);
                 break;
             case LevelTwoSuccess:
-                progressForBar=0;
+                progressForBar = 0;
                 pbHorizontal.setProgress(0);
                 pbHorizontal.setEnabled(false);
                 pbHorizontal.setVisibility(View.INVISIBLE);
-                isCompletedTwo=true;
-                fragmentProgress.setDataRecyclerView(listTwoIDS,listProgresses);
+                isCompletedTwo = true;
+                fragmentProgress.setDataRecyclerView(listTwoIDS, listProgresses);
                 changeFragment(fragmentProgress);
                 break;
             case LevelThreeSuccess:
-                progressForBar=0;
+                progressForBar = 0;
                 pbHorizontal.setProgress(0);
                 pbHorizontal.setEnabled(false);
                 pbHorizontal.setVisibility(View.INVISIBLE);
-                isCompletedThree=true;
-                fragmentProgress.setDataRecyclerView(listThreeIDS,listProgresses);
+                isCompletedThree = true;
+                fragmentProgress.setDataRecyclerView(listThreeIDS, listProgresses);
                 changeFragment(fragmentProgress);
                 Statistics.setLessonCompleted();
                 break;
             case NextLevel:
                 if (listTwoIDS.size() == 0 && listThreeIDS.size() == 0) {
                     Statistics.setLessonCompleted();
-                    Intent intent = new Intent(PlayActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
-                } else if(listTwoIDS.size()!=0 && listThreeIDS.size()==0) {
-                    if(isCompletedTwo){
+                    changeFragment(fragmentLessonEnd);
+                } else if (listTwoIDS.size() != 0 && listThreeIDS.size() == 0) {
+                    if (isCompletedTwo) {
                         Statistics.setLessonCompleted();
-                        Intent intent = new Intent(PlayActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }else {
+                        changeFragment(fragmentLessonEnd);
+                    } else {
                         progressForBar = 0;
                         pbHorizontal.setProgress(0);
                         pbHorizontal.setEnabled(true);
@@ -178,14 +177,11 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                         listProgresses.addAll(getOldProgress(listTwoIDS));
                         changeFragment(fragmentLevelTwo);
                     }
-                }
-                else if(listTwoIDS.size() !=0) {
-                    if(isCompletedTwo){
+                } else if (listTwoIDS.size() != 0) {
+                    if (isCompletedTwo) {
                         Statistics.setLessonCompleted();
-                        Intent intent = new Intent(PlayActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }else {
+                        changeFragment(fragmentLessonEnd);
+                    } else {
                         progressForBar = 0;
                         pbHorizontal.setProgress(0);
                         pbHorizontal.setEnabled(true);
@@ -194,13 +190,11 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                         listProgresses.addAll(getOldProgress(listTwoIDS));
                         changeFragment(fragmentLevelTwo);
                     }
-                }else if(listThreeIDS.size()!=0){
-                    if(isCompletedThree){
+                } else if (listThreeIDS.size() != 0) {
+                    if (isCompletedThree) {
                         Statistics.setLessonCompleted();
-                        Intent intent = new Intent(PlayActivity.this, MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }else {
+                        changeFragment(fragmentLessonEnd);
+                    } else {
                         progressForBar = 0;
                         pbHorizontal.setProgress(0);
                         pbHorizontal.setEnabled(true);
@@ -209,15 +203,17 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                         listProgresses.addAll(getOldProgress(listThreeIDS));
                         changeFragment(fragmentLevelThree);
                     }
-                }
-
-                else {
-                    Intent intent = new Intent(PlayActivity.this, MainActivity.class);
-                    startActivity(intent);
-                    finish();
+                } else {
+                    changeFragment(fragmentLessonEnd);
                 }
                 break;
         }
+    }
+
+    public void goToMenu() {
+        Intent intent = new Intent(PlayActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override

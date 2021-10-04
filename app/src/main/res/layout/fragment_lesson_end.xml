@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".LessonEndFragment">
+
+    <TextView
+        android:id="@+id/endTextView"
+        android:layout_width="363dp"
+        android:layout_height="132dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="224dp"
+        android:layout_marginEnd="24dp"
+        android:autoSizeMaxTextSize="100sp"
+        android:autoSizeMinTextSize="12sp"
+        android:autoSizeTextType="uniform"
+        android:text="Урок пройден"
+        android:textSize="34sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/menuButton"
+        android:layout_width="166dp"
+        android:layout_height="74dp"
+        android:layout_marginStart="122dp"
+        android:layout_marginTop="96dp"
+        android:layout_marginEnd="123dp"
+        android:text="На главную"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/endTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

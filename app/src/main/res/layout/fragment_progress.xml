@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ProgressFragment">
+    tools:context=".ProgressFragment"
+    android:background="@drawable/custom_background">
 
 
     <TextView
@@ -18,7 +19,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="4dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 

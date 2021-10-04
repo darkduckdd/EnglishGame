@@ -10,11 +10,14 @@
         android:id="@+id/textView2"
         android:layout_width="304dp"
         android:layout_height="66dp"
+        android:layout_marginTop="48dp"
         android:gravity="center"
         android:text="Level 1"
         android:textSize="48sp"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="36dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text"
@@ -48,7 +51,8 @@
         android:layout_marginBottom="92dp"
         android:text="Далее"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="DuplicateClickableBoundsCheck" />
 
     <Button
         android:id="@+id/rightButton"
