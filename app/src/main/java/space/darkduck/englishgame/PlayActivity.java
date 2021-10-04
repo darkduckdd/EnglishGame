@@ -127,9 +127,9 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     }
 
     @Override
-    public void onSendData(String data) {
-        switch (data) {
-            case "SuccessLevelOne":
+    public void onResultLevel (LevelResult result) {
+        switch (result) {
+            case LevelOneSuccess:
                 progressForBar=0;
                 pbHorizontal.setProgress(0);
                 pbHorizontal.setEnabled(false);
@@ -138,7 +138,7 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                 fragmentProgress.setDataRecyclerView(listOneIDS,listProgresses);
                 changeFragment(fragmentProgress);
                 break;
-            case "SuccessLevelTwo":
+            case LevelTwoSuccess:
                 progressForBar=0;
                 pbHorizontal.setProgress(0);
                 pbHorizontal.setEnabled(false);
@@ -147,7 +147,7 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                 fragmentProgress.setDataRecyclerView(listTwoIDS,listProgresses);
                 changeFragment(fragmentProgress);
                 break;
-            case "SuccessLevelThree":
+            case LevelThreeSuccess:
                 progressForBar=0;
                 pbHorizontal.setProgress(0);
                 pbHorizontal.setEnabled(false);
@@ -157,7 +157,7 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                 changeFragment(fragmentProgress);
                 Statistics.setLessonCompleted();
                 break;
-            case "NextLevel":
+            case NextLevel:
                 if (listTwoIDS.size() == 0 && listThreeIDS.size() == 0) {
                     Statistics.setLessonCompleted();
                     Intent intent = new Intent(PlayActivity.this, MainActivity.class);
@@ -179,7 +179,22 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                         changeFragment(fragmentLevelTwo);
                     }
                 }
-                else if(listThreeIDS.size() !=0) {
+                else if(listTwoIDS.size() !=0) {
+                    if(isCompletedTwo){
+                        Statistics.setLessonCompleted();
+                        Intent intent = new Intent(PlayActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }else {
+                        progressForBar = 0;
+                        pbHorizontal.setProgress(0);
+                        pbHorizontal.setEnabled(true);
+                        pbHorizontal.setVisibility(View.VISIBLE);
+                        listProgresses.clear();
+                        listProgresses.addAll(getOldProgress(listTwoIDS));
+                        changeFragment(fragmentLevelTwo);
+                    }
+                }else if(listThreeIDS.size()!=0){
                     if(isCompletedThree){
                         Statistics.setLessonCompleted();
                         Intent intent = new Intent(PlayActivity.this, MainActivity.class);
@@ -194,7 +209,9 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                         listProgresses.addAll(getOldProgress(listThreeIDS));
                         changeFragment(fragmentLevelThree);
                     }
-                }else {
+                }
+
+                else {
                     Intent intent = new Intent(PlayActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();

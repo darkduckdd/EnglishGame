@@ -68,7 +68,7 @@ public class LevelThreeFragment extends Fragment {
                 listID.remove(currentPosition);
                 Statistics.setWordsLearned();
                 if (listID.size() == 0) {
-                    fragmentSendDataListener.onSendData("SuccessLevelThree");
+                    fragmentSendDataListener.onResultLevel(LevelResult.LevelThreeSuccess);
                 } else if (listID.size() == 1) {
                     currentPosition = 0;
                     text.setText(activity.getRusWord(listID.get(currentPosition)));

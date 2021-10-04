@@ -50,7 +50,7 @@ public class LevelTwoFragment extends Fragment {
             if (activity.getProgress(listID.get(currentPosition)) >= 60) {
                 listID.remove(currentPosition);
                 if (listID.size() == 0) {
-                    fragmentSendDataListener.onSendData("SuccessLevelTwo");
+                    fragmentSendDataListener.onResultLevel(LevelResult.LevelTwoSuccess);
                 } else if (listID.size() == 1) {
                     currentPosition = 0;
                     text.setText(activity.getEngWord(listID.get(currentPosition)));

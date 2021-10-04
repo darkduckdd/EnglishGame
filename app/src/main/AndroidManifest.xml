@@ -24,11 +24,9 @@
         </activity>
         <activity
             android:name=".AddActivity"
-            android:label="Add Dictionary"
-            android:parentActivityName=".MainActivity" />
+            android:label="Add Dictionary" />
         <activity
-            android:name=".PlayActivity"
-            android:label="English Game" >
+            android:name=".PlayActivity">
         </activity>
     </application>
 

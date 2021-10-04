@@ -43,7 +43,7 @@ public class ProgressFragment extends Fragment {
         recyclerView.setAdapter(progressAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         nextLevelButton.setOnClickListener((v)->{
-            fragmentSendDataListener.onSendData("NextLevel");
+            fragmentSendDataListener.onResultLevel(LevelResult.NextLevel);
         });
     }
 

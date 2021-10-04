@@ -3,7 +3,7 @@ package space.darkduck.englishgame;
 import android.content.Context;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,7 +33,7 @@ public class LevelOneFragment extends Fragment {
             if(activity.getProgress(listID.get(currentPosition))>=20) {
                 listID.remove(currentPosition);
                 if (listID.size() == 0) {
-                    fragmentSendDataListener.onSendData("SuccessLevelOne");
+                    fragmentSendDataListener.onResultLevel(LevelResult.LevelOneSuccess);
                 } else if (listID.size() == 1) {
                     currentPosition = 0;
                     textView.setText(activity.getEngWord(listID.get(currentPosition)));

@@ -89,7 +89,7 @@ public class AddActivity extends AppCompatActivity implements OnFragmentListener
     }
 
     @Override
-    public void onSendData(String data) {
+    public void onResultLevel(LevelResult result) {
 
     }
 
