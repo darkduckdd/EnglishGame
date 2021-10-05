@@ -168,6 +168,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         addStartWord(db,"home","дом",0);
         addStartWord(db,"night","ночь",0);
         addStartWord(db,"room","комната",0);
+        addStartWord(db,"light","свет",0);
+        addStartWord(db,"road","дорога",0);
+        addStartWord(db,"never","никогда",0);
+        addStartWord(db,"friend","друг",0);
+        addStartWord(db,"truth","правда",0);
+        addStartWord(db,"main","главный",0);
+        addStartWord(db,"small","маленький",0);
+        addStartWord(db,"morning","утро",0);
+        addStartWord(db,"today","сегодня",0);
+        addStartWord(db,"finger","палец",0);
     }
 
     @Override

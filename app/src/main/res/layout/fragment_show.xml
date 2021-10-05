@@ -17,6 +17,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="All words"
+            android:fontFamily="sans-serif-condensed-medium"
+            app:autoSizeTextType="uniform"
+            android:textAllCaps="false"
             android:textSize="34sp"
             android:textStyle="bold|italic" />
 

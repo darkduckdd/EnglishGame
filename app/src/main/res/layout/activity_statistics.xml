@@ -14,6 +14,7 @@
         android:layout_marginStart="28dp"
         android:layout_marginBottom="28dp"
         android:clickable="true"
+        android:background="@color/colorText"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_baseline_arrow_back_24" />
@@ -32,47 +33,65 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:padding="3dp"
             android:text="Статистика"
+            android:textAllCaps="false"
             android:textSize="48sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:autoSizeTextType="uniform" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="2dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="5dp">
 
             <TextView
                 android:id="@+id/lessonCompleted"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="Пройдено уроков"
-                android:textSize="34sp" />
+                android:textAllCaps="false"
+                android:textSize="34sp"
+                app:autoSizeTextType="uniform" />
 
             <TextView
                 android:id="@+id/wordLearned"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="Слов выучено"
-                android:textSize="34sp" />
+                android:textAllCaps="false"
+                android:textSize="34sp"
+                app:autoSizeTextType="uniform" />
 
             <TextView
                 android:id="@+id/maxWord"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="Всего слов"
-                android:textSize="34sp" />
+                android:textAllCaps="false"
+                android:textSize="34sp"
+                app:autoSizeTextType="uniform" />
 
             <TextView
                 android:id="@+id/wordLeft"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-condensed-medium"
                 android:text="Слов осталось"
-                android:textSize="34sp" />
+                android:textAllCaps="false"
+                android:textSize="34sp"
+                app:autoSizeTextType="uniform" />
         </LinearLayout>
 
     </LinearLayout>

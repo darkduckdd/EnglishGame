@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddFragment"
+    android:background="@color/colorBackground"
     android:padding="30dp">
 
     <EditText
@@ -30,7 +31,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.95"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rusInput" />
+        app:layout_constraintTop_toBottomOf="@+id/rusInput"
+        android:background="@drawable/custom_button"
+        android:textAllCaps="false"
+        android:textColor="@color/colorText"/>
 
     <EditText
         android:id="@+id/rusInput"

@@ -55,21 +55,23 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
         setContentView(R.layout.activity_play);
         myDB = new DatabaseHelper(PlayActivity.this);
         init();
-        if (cursorLOne.getCount() != 0) {
-            listProgresses.addAll(getOldProgress(listOneIDS));
-            pbHorizontal.setVisibility(View.VISIBLE);
-            pbHorizontal.setProgress(0);
-            changeFragment(fragmentLevelOne);
-        } else if (cursorLTwo.getCount() != 0) {
-            listProgresses.addAll(getOldProgress(listTwoIDS));
-            pbHorizontal.setVisibility(View.VISIBLE);
-            pbHorizontal.setProgress(0);
-            changeFragment(fragmentLevelTwo);
-        } else if (cursorLThree.getCount() != 0) {
-            listProgresses.addAll(getOldProgress(listThreeIDS));
-            pbHorizontal.setVisibility(View.VISIBLE);
-            pbHorizontal.setProgress(0);
-            changeFragment(fragmentLevelThree);
+        if(listOneIDS.size()==10 || listTwoIDS.size()==10 || listThreeIDS.size()==10) {
+            if (listOneIDS.size() != 0) {
+                listProgresses.addAll(getOldProgress(listOneIDS));
+                pbHorizontal.setVisibility(View.VISIBLE);
+                pbHorizontal.setProgress(0);
+                changeFragment(fragmentLevelOne);
+            } else if (listTwoIDS.size() != 0) {
+                listProgresses.addAll(getOldProgress(listTwoIDS));
+                pbHorizontal.setVisibility(View.VISIBLE);
+                pbHorizontal.setProgress(0);
+                changeFragment(fragmentLevelTwo);
+            } else if (listThreeIDS.size() != 0) {
+                listProgresses.addAll(getOldProgress(listThreeIDS));
+                pbHorizontal.setVisibility(View.VISIBLE);
+                pbHorizontal.setProgress(0);
+                changeFragment(fragmentLevelThree);
+            }
         } else {
             fragmentLessonEnd.setEmptyTextView();
             changeFragment(fragmentLessonEnd);
@@ -160,14 +162,16 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                 isCompletedThree = true;
                 fragmentProgress.setDataRecyclerView(listThreeIDS, listProgresses);
                 changeFragment(fragmentProgress);
-                Statistics.setLessonCompleted();
                 break;
             case NextLevel:
                 if (listTwoIDS.size() == 0 && listThreeIDS.size() == 0) {
                     Statistics.setLessonCompleted();
                     changeFragment(fragmentLessonEnd);
                 } else if (listTwoIDS.size() != 0) {
-                    if (isCompletedTwo && listThreeIDS.size() != 0) {
+                    if (isCompletedTwo && listThreeIDS.size() == 0) {
+                        Statistics.setLessonCompleted();
+                        changeFragment(fragmentLessonEnd);
+                    } else if (isCompletedTwo && listThreeIDS.size() != 0) {
                         if (isCompletedThree) {
                             Statistics.setLessonCompleted();
                             changeFragment(fragmentLessonEnd);
@@ -180,7 +184,7 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                             listProgresses.addAll(getOldProgress(listThreeIDS));
                             changeFragment(fragmentLevelThree);
                         }
-                    }else {
+                    } else {
                         progressForBar = 0;
                         pbHorizontal.setProgress(0);
                         pbHorizontal.setEnabled(true);
@@ -188,19 +192,6 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                         listProgresses.clear();
                         listProgresses.addAll(getOldProgress(listTwoIDS));
                         changeFragment(fragmentLevelTwo);
-                    }
-                } else if (listThreeIDS.size() != 0) {
-                    if (isCompletedThree) {
-                        Statistics.setLessonCompleted();
-                        changeFragment(fragmentLessonEnd);
-                    } else {
-                        progressForBar = 0;
-                        pbHorizontal.setProgress(0);
-                        pbHorizontal.setEnabled(true);
-                        pbHorizontal.setVisibility(View.VISIBLE);
-                        listProgresses.clear();
-                        listProgresses.addAll(getOldProgress(listThreeIDS));
-                        changeFragment(fragmentLevelThree);
                     }
                 } else {
                     changeFragment(fragmentLessonEnd);
