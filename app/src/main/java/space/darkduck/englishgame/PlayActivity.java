@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -42,6 +43,7 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
         addIDToList(cursorLOne, listOneIDS);
         addIDToList(cursorLTwo, listTwoIDS);
         addIDToList(cursorLThree, listThreeIDS);
+        Log.d("LISTS", "listOne: " + listOneIDS.size() + ", listTwo: " + listTwoIDS.size() + ", list three: " + listThreeIDS.size());
         cursorLOne.close();
         cursorLTwo.close();
         cursorLThree.close();
@@ -164,24 +166,21 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                 if (listTwoIDS.size() == 0 && listThreeIDS.size() == 0) {
                     Statistics.setLessonCompleted();
                     changeFragment(fragmentLessonEnd);
-                } else if (listTwoIDS.size() != 0 && listThreeIDS.size() == 0) {
-                    if (isCompletedTwo) {
-                        Statistics.setLessonCompleted();
-                        changeFragment(fragmentLessonEnd);
-                    } else {
-                        progressForBar = 0;
-                        pbHorizontal.setProgress(0);
-                        pbHorizontal.setEnabled(true);
-                        pbHorizontal.setVisibility(View.VISIBLE);
-                        listProgresses.clear();
-                        listProgresses.addAll(getOldProgress(listTwoIDS));
-                        changeFragment(fragmentLevelTwo);
-                    }
                 } else if (listTwoIDS.size() != 0) {
-                    if (isCompletedTwo) {
-                        Statistics.setLessonCompleted();
-                        changeFragment(fragmentLessonEnd);
-                    } else {
+                    if (isCompletedTwo && listThreeIDS.size() != 0) {
+                        if (isCompletedThree) {
+                            Statistics.setLessonCompleted();
+                            changeFragment(fragmentLessonEnd);
+                        } else {
+                            progressForBar = 0;
+                            pbHorizontal.setProgress(0);
+                            pbHorizontal.setEnabled(true);
+                            pbHorizontal.setVisibility(View.VISIBLE);
+                            listProgresses.clear();
+                            listProgresses.addAll(getOldProgress(listThreeIDS));
+                            changeFragment(fragmentLevelThree);
+                        }
+                    }else {
                         progressForBar = 0;
                         pbHorizontal.setProgress(0);
                         pbHorizontal.setEnabled(true);

@@ -4,6 +4,10 @@ import android.animation.ValueAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,8 +33,7 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
     @Override
     public void onBindViewHolder(@NonNull ProgressHolder holder, int position) {
         holder.word.setText(listWords.get(position));
-        holder.oldProgress.setText(String.valueOf(listOldProgress.get(position)));
-        startCountAnimation(holder.newProgress,listOldProgress.get(position),listNewProgress.get(position));
+        startCountAnimation(holder.progressBar,listOldProgress.get(position),listNewProgress.get(position),holder.imageView);
     }
 
     @Override
@@ -39,20 +42,26 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
     }
     public static class ProgressHolder extends RecyclerView.ViewHolder{
 
-        private TextView word,oldProgress,newProgress;
+        private TextView word;
+        private ProgressBar progressBar;
+        private ImageView imageView;
         public ProgressHolder(@NonNull View itemView) {
             super(itemView);
             word=itemView.findViewById(R.id.textWord);
-            oldProgress=itemView.findViewById(R.id.textOldProgress);
-            newProgress=itemView.findViewById(R.id.textNewProgress);
+            progressBar=itemView.findViewById(R.id.progressBarInFragment);
+            imageView=itemView.findViewById(R.id.imageViewProgress);
+
         }
     }
-    private void startCountAnimation(TextView text, int start,int end) {
+    private void startCountAnimation(ProgressBar pb,int start,int end,ImageView image) {
         ValueAnimator animator = ValueAnimator.ofInt(start, end); //0 is min number, 600 is max number
         animator.setDuration(3000); //Duration is in milliseconds
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
-                text.setText(animation.getAnimatedValue().toString());
+                pb.setProgress(Integer.parseInt(animation.getAnimatedValue().toString()));
+                if(pb.getProgress()>=99){
+                    image.setVisibility(View.VISIBLE);
+                }
             }
         });
         animator.start();
