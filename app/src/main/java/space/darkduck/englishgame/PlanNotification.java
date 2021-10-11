@@ -1,5 +1,5 @@
 package space.darkduck.englishgame;
 
-public class DictionaryJSON {
+public class PlanNotification {
 
 }

@@ -5,14 +5,17 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
     private Context context;
     private static final String databaseName = "EnglishRussianDictionary.db";
-    private static final int databaseVersion = 1;
+    private static final int databaseVersion = 2;
     private static final String tableName = "Dictionary";
     private static final String columnId = "Id";
     private static final String columnEngWord = "EnglishWord";
@@ -23,6 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private int minPointsForLevelTwo=20;
     private int minPointsForLevelThree =60;
     private int maxWords=10;
+    private boolean isCreate=false;
 
     DatabaseHelper(@Nullable Context context) {
         super(context, databaseName, null, databaseVersion);
@@ -138,51 +142,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 columnRusWord + " TEXT, " +
                 columnProgress + " INTEGER);";
         db.execSQL(query);
-        addStartWord(db,"mather","мама",0);
-        addStartWord(db,"father","отец",0);
-        addStartWord(db,"time","время",0);
-        addStartWord(db,"day","день",0);
-        addStartWord(db,"way","путь",0);
-        addStartWord(db,"monday","понедельник",0);
-        addStartWord(db,"tuesday","вторник",0);
-        addStartWord(db,"wednesday","среда",0);
-        addStartWord(db,"thursday","четверг",0);
-        addStartWord(db,"friday","пятница",0);
-        addStartWord(db,"saturday","суббота",0);
-        addStartWord(db,"sunday","воскресенье",0);
-        addStartWord(db,"water","вода",0);
-        addStartWord(db,"say","сказать",0);
-        addStartWord(db,"man","мужчина",0);
-        addStartWord(db,"woman","женщина",0);
-        addStartWord(db,"world","мир",0);
-        addStartWord(db,"hello","привет",0);
-        addStartWord(db,"life","жизнь",0);
-        addStartWord(db,"money","деньги",0);
-        addStartWord(db,"eye","глаза",0);
-        addStartWord(db,"person","человек",0);
-        addStartWord(db,"door","дверь",0);
-        addStartWord(db,"body","тело",0);
-        addStartWord(db,"country","страна",0);
-        addStartWord(db,"hour","час",0);
-        addStartWord(db,"car","машина",0);
-        addStartWord(db,"home","дом",0);
-        addStartWord(db,"night","ночь",0);
-        addStartWord(db,"room","комната",0);
-        addStartWord(db,"light","свет",0);
-        addStartWord(db,"road","дорога",0);
-        addStartWord(db,"never","никогда",0);
-        addStartWord(db,"friend","друг",0);
-        addStartWord(db,"truth","правда",0);
-        addStartWord(db,"main","главный",0);
-        addStartWord(db,"small","маленький",0);
-        addStartWord(db,"morning","утро",0);
-        addStartWord(db,"today","сегодня",0);
-        addStartWord(db,"finger","палец",0);
+        FileWorker fileWorker = new FileWorker(context);
+        ArrayList<String> eWord = fileWorker.readEngFile();
+        ArrayList<String> rWord = fileWorker.readRusFile();
+        for (int i = 0; i < eWord.size(); i++) {
+            addStartWord(db, eWord.get(i), rWord.get(i), 0);
+        }
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + tableName);
         onCreate(db);
+    }
+    public  void ResetDB(){
+        if(!isCreate){
+            SQLiteDatabase db=this.getWritableDatabase();
+            db.execSQL("DROP TABLE "+ tableName);
+            onCreate(db);
+        }
+        else {
+            return;
+        }
     }
 }
