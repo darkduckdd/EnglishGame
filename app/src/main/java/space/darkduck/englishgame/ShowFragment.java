@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import space.darkduck.englishgame.Adapters.WordAdapter;
+
 
 public class ShowFragment extends Fragment {
     private AddActivity activity;

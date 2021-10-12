@@ -25,7 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private int minPoint=0;
     private int minPointsForLevelTwo=20;
     private int minPointsForLevelThree =60;
-    private int maxWords=10;
+    private static int maxWords=10;
     private boolean isCreate=false;
 
     DatabaseHelper(@Nullable Context context) {
@@ -72,6 +72,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getWordsForLevelOne() {
+        Log.d("TESTAD",maxWords+":");
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select Id from Dictionary where Progress >= ? and Progress< ? order by random() limit "+maxWords, new String[]{String.valueOf(minPoint),String.valueOf(minPointsForLevelTwo)});
         return cursor;
@@ -135,6 +136,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(tableName, null, cv);
     }
 
+    public static void setWordLimit(int value){
+        maxWords=value;
+    }
+    public static int getWordLimit(){
+        return maxWords;
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + tableName + " (" + columnId + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -154,15 +162,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + tableName);
         onCreate(db);
-    }
-    public  void ResetDB(){
-        if(!isCreate){
-            SQLiteDatabase db=this.getWritableDatabase();
-            db.execSQL("DROP TABLE "+ tableName);
-            onCreate(db);
-        }
-        else {
-            return;
-        }
     }
 }

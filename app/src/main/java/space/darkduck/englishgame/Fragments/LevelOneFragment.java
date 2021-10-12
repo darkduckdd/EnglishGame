@@ -1,4 +1,4 @@
-package space.darkduck.englishgame;
+package space.darkduck.englishgame.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,6 +12,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Random;
 
+import space.darkduck.englishgame.DatabaseHelper;
+import space.darkduck.englishgame.LevelResult;
+import space.darkduck.englishgame.OnFragmentListener;
+import space.darkduck.englishgame.PlayActivity;
+import space.darkduck.englishgame.R;
+
 public class LevelOneFragment extends Fragment {
 
     private TextView textView;
@@ -20,6 +26,7 @@ public class LevelOneFragment extends Fragment {
     private ArrayList<Integer> listID = new ArrayList();
     private Button rightButton, mistakeButton,nextButton;
     private int currentPosition;
+    private int progressValue;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,7 +35,7 @@ public class LevelOneFragment extends Fragment {
         init(view);
         textView.setText(activity.getEngWord(listID.get(currentPosition)));
         rightButton.setOnClickListener((v) -> {
-            activity.addProgressBar(10);
+            activity.addProgressBar(progressValue);
             activity.updateWordProgress(listID.get(currentPosition));
             if(activity.getProgress(listID.get(currentPosition))>=20) {
                 listID.remove(currentPosition);
@@ -73,6 +80,7 @@ public class LevelOneFragment extends Fragment {
         nextButton.setEnabled(false);
         Random random = new Random();
         currentPosition= random.nextInt(listID.size());
+        progressValue=100/ DatabaseHelper.getWordLimit();
     }
 
     @Override

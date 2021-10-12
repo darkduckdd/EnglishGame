@@ -1,4 +1,4 @@
-package space.darkduck.englishgame;
+package space.darkduck.englishgame.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -18,6 +18,12 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
+import space.darkduck.englishgame.DatabaseHelper;
+import space.darkduck.englishgame.LevelResult;
+import space.darkduck.englishgame.OnFragmentListener;
+import space.darkduck.englishgame.PlayActivity;
+import space.darkduck.englishgame.R;
+
 public class LevelTwoFragment extends Fragment {
     private OnFragmentListener fragmentSendDataListener;
     private Button button1, button2, button3, button4;
@@ -27,6 +33,7 @@ public class LevelTwoFragment extends Fragment {
     private ArrayList<Integer> listID = new ArrayList<>();
     private ArrayList<Integer> listIDCopy = new ArrayList<>();
     private int currentPosition;
+    private int progressValue;
 
     private void setTextButtons(List<Button> buttonList) {
         Set<String> strGenerated = new HashSet<>();
@@ -45,7 +52,7 @@ public class LevelTwoFragment extends Fragment {
 
     void checkClick(Button button) {
         if (button.getText().equals(activity.getRusWord(listID.get(currentPosition)))) {
-            activity.addProgressBar(5);
+            activity.addProgressBar(progressValue);
             activity.updateWordProgress(listID.get(currentPosition));
             if (activity.getProgress(listID.get(currentPosition)) >= 60) {
                 listID.remove(currentPosition);
@@ -94,6 +101,7 @@ public class LevelTwoFragment extends Fragment {
                 checkClick(btn);
             });
         }
+        progressValue=100/ DatabaseHelper.getWordLimit();
     }
 
     @Override

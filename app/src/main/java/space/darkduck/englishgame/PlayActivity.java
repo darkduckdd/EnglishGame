@@ -13,6 +13,12 @@ import android.widget.ProgressBar;
 
 import java.util.ArrayList;
 
+import space.darkduck.englishgame.Fragments.LessonEndFragment;
+import space.darkduck.englishgame.Fragments.LevelOneFragment;
+import space.darkduck.englishgame.Fragments.LevelThreeFragment;
+import space.darkduck.englishgame.Fragments.LevelTwoFragment;
+import space.darkduck.englishgame.Fragments.ProgressFragment;
+
 public class PlayActivity extends AppCompatActivity implements OnFragmentListener {
 
     private ProgressBar pbHorizontal;
@@ -43,7 +49,6 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
         addIDToList(cursorLOne, listOneIDS);
         addIDToList(cursorLTwo, listTwoIDS);
         addIDToList(cursorLThree, listThreeIDS);
-        Log.d("LISTS", "listOne: " + listOneIDS.size() + ", listTwo: " + listTwoIDS.size() + ", list three: " + listThreeIDS.size());
         cursorLOne.close();
         cursorLTwo.close();
         cursorLThree.close();
@@ -55,7 +60,7 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
         setContentView(R.layout.activity_play);
         myDB = new DatabaseHelper(PlayActivity.this);
         init();
-        if(listOneIDS.size()==10 || listTwoIDS.size()==10 || listThreeIDS.size()==10) {
+        if(listOneIDS.size()==DatabaseHelper.getWordLimit() || listTwoIDS.size()==DatabaseHelper.getWordLimit() || listThreeIDS.size()==DatabaseHelper.getWordLimit()) {
             if (listOneIDS.size() != 0) {
                 listProgresses.addAll(getOldProgress(listOneIDS));
                 pbHorizontal.setVisibility(View.VISIBLE);

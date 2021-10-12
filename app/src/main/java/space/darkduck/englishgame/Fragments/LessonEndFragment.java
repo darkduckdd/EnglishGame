@@ -1,4 +1,4 @@
-package space.darkduck.englishgame;
+package space.darkduck.englishgame.Fragments;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import space.darkduck.englishgame.PlayActivity;
+import space.darkduck.englishgame.R;
 
 public class LessonEndFragment extends Fragment {
     private TextView textView;

@@ -1,4 +1,4 @@
-package space.darkduck.englishgame;
+package space.darkduck.englishgame.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,6 +14,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
+import space.darkduck.englishgame.LevelResult;
+import space.darkduck.englishgame.OnFragmentListener;
+import space.darkduck.englishgame.PlayActivity;
+import space.darkduck.englishgame.Adapters.ProgressAdapter;
+import space.darkduck.englishgame.R;
 
 public class ProgressFragment extends Fragment {
     private OnFragmentListener fragmentSendDataListener;

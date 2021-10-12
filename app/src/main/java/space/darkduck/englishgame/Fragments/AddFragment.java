@@ -1,4 +1,4 @@
-package space.darkduck.englishgame;
+package space.darkduck.englishgame.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+
+import space.darkduck.englishgame.OnFragmentListener;
+import space.darkduck.englishgame.R;
 
 public class AddFragment extends Fragment {
     private EditText engInput,rusInput;

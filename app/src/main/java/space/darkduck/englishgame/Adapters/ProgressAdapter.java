@@ -1,17 +1,17 @@
-package space.darkduck.englishgame;
+package space.darkduck.englishgame.Adapters;
 
 import android.animation.ValueAnimator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
+
+import space.darkduck.englishgame.R;
 
 public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.ProgressHolder> {
     ArrayList<Integer> listOldProgress, listNewProgress;

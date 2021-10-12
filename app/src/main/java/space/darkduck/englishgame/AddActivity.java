@@ -11,6 +11,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+import space.darkduck.englishgame.Fragments.AddFragment;
+
 //Класс для добавление данных в БД
 public class AddActivity extends AppCompatActivity implements OnFragmentListener {
     private DatabaseHelper myDB;
