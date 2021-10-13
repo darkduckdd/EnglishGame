@@ -47,7 +47,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             if (dialogFragment != null) {
                 dialogFragment.setTargetFragment(this, 0);
-                dialogFragment.show(this.getFragmentManager(), "android.support.v7.preference.PreferenceFragment.DIALOG");
+                dialogFragment.show(this.getFragmentManager(), NotificationReceiver.channelId);
             } else {
                 super.onDisplayPreferenceDialog(preference);
             }

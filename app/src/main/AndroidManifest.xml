@@ -35,6 +35,7 @@
             android:name=".AddActivity"
             android:label="Add Dictionary" />
         <activity android:name=".PlayActivity" />
+        <receiver android:name=".NotificationReceiver"/>
     </application>
 
 </manifest>
