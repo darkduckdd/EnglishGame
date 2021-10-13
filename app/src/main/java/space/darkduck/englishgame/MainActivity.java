@@ -9,9 +9,11 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -50,31 +52,10 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(MainActivity.this, StatisticsActivity.class);
             startActivity(intent);
         });
-    }
-
-    public void scheduleNotification(Context context, long delay, int notificationId) {//delay is after how much time(in millis) from current time you want to schedule the notification
-        Intent intent = new Intent(context, MainActivity.class);
-        PendingIntent activity = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
-                .setAutoCancel(false)
-                .setSmallIcon(R.drawable.ic_add)
-                .setWhen(System.currentTimeMillis())
-                .setContentTitle("Заголовок")
-                .setContentText("Test")
-                .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
-        builder.setContentIntent(activity);
-
-        Notification notification = builder.build();
-
-        Intent notificationIntent = new Intent(context, NotificationPublisher.class);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, notificationId);
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, notificationId, notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-
-        long futureInMillis = SystemClock.elapsedRealtime() + delay;
-        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
+        String wordCount=preferences.getString("wordCount","10");
+        String time=preferences.getString("setTime","12:00");
+        DatabaseHelper.setWordLimit(Integer.parseInt(wordCount));
     }
 
     @Override
@@ -88,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.settings:
-                Intent intent=new Intent(this,SettingActivity.class);
+                Intent intent=new Intent(this,SettingsActivity.class);
                 startActivity(intent);
                 return true;
             default:
@@ -103,8 +84,7 @@ public class MainActivity extends AppCompatActivity {
         init();
         notificationManager=(NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         notify.setOnClickListener((v)->{
-            scheduleNotification(this,30000,notifyId);
-            /*Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             PendingIntent pendingIntent=PendingIntent.getActivity(getApplicationContext(),0,intent,PendingIntent.FLAG_UPDATE_CURRENT);
             NotificationCompat.Builder notificationBuilder=new NotificationCompat.Builder(getApplicationContext(),channelId)
@@ -115,11 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     .setContentTitle("Заголовок")
                     .setContentText("Test")
                     .setPriority(NotificationCompat.PRIORITY_HIGH);
-            notificationManager.notify(notifyId,notificationBuilder.build());*/
+            notificationManager.notify(notifyId,notificationBuilder.build());
         });
-
-
     }
-
-
 }

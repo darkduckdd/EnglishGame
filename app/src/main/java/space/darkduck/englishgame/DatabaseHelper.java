@@ -26,7 +26,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private int minPointsForLevelTwo=20;
     private int minPointsForLevelThree =60;
     private static int maxWords=10;
-    private boolean isCreate=false;
 
     DatabaseHelper(@Nullable Context context) {
         super(context, databaseName, null, databaseVersion);
@@ -136,13 +135,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.insert(tableName, null, cv);
     }
 
-    public static void setWordLimit(int value){
-        maxWords=value;
-    }
     public static int getWordLimit(){
         return maxWords;
     }
-
+    public static void setWordLimit(int value){maxWords=value;}
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = "CREATE TABLE " + tableName + " (" + columnId + " INTEGER PRIMARY KEY AUTOINCREMENT, "

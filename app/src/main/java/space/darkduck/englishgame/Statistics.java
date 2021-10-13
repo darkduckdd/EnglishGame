@@ -4,6 +4,7 @@ import android.text.format.DateUtils;
 import android.util.Log;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class Statistics {
     private static int lessonCompleted=0;
@@ -21,8 +22,9 @@ public class Statistics {
     public static void setWordsLearned(){
         wordslearned++;
     }
-    public static void setSaveCalendar(Calendar calendar){
-
-
+    public  static  void getYear(){
+        calendar=Calendar.getInstance();
+        Log.d("TESTAD", calendar.get(Calendar.YEAR)+":y");
+        Log.d("TESTAD", "work");
     }
 }

@@ -1,0 +1,18 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        app:title="@string/messages_header">
+        <ListPreference
+            app:defaultValue="true"
+            app:entries="@array/word_entries"
+            app:entryValues="@array/word_values"
+            app:key="wordCount"
+            app:title="@string/word_title"
+            app:useSimpleSummaryProvider="true" />
+        <space.darkduck.englishgame.TimePreference
+            android:key="setTime"
+            android:title="Set time notification"
+            android:defaultValue="12:00" />
+    </PreferenceCategory>
+</PreferenceScreen>
