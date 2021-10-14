@@ -19,7 +19,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.557"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:focusableInTouchMode="true"
+        android:isScrollContainer="false"/>
 
     <Button
         android:id="@+id/saveButton"
@@ -47,5 +49,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.557"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/engInput" />
+        app:layout_constraintTop_toBottomOf="@+id/engInput"
+        android:focusableInTouchMode="true"
+        android:isScrollContainer="false"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

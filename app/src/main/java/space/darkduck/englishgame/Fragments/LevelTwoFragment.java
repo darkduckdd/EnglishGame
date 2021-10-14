@@ -1,9 +1,11 @@
 package space.darkduck.englishgame.Fragments;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +18,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.TreeSet;
 
 import space.darkduck.englishgame.DatabaseHelper;
@@ -51,6 +55,15 @@ public class LevelTwoFragment extends Fragment {
     }
 
     void checkClick(Button button) {
+        for(Button bton:buttons){
+            if(bton.getText().equals(activity.getRusWord(listID.get(currentPosition)))) {
+                Drawable drawable = getContext().getResources().getDrawable(R.drawable.right_click);
+                bton.setBackground(drawable);
+            }else {
+                Drawable drw = getContext().getResources().getDrawable(R.drawable.error_click);
+                bton.setBackground(drw);
+            }
+        }
         if (button.getText().equals(activity.getRusWord(listID.get(currentPosition)))) {
             activity.addProgressBar(progressValue);
             activity.updateWordProgress(listID.get(currentPosition));
@@ -60,26 +73,48 @@ public class LevelTwoFragment extends Fragment {
                     fragmentSendDataListener.onResultLevel(LevelResult.LevelTwoSuccess);
                 } else if (listID.size() == 1) {
                     currentPosition = 0;
+                    setTimer();
                     text.setText(activity.getEngWord(listID.get(currentPosition)));
                     setTextButtons(buttons);
                 } else {
-                    Random random = new Random();
-                    currentPosition = random.nextInt(listID.size());
-                    text.setText(activity.getEngWord(listID.get(currentPosition)));
-                    setTextButtons(buttons);
+                    setTimer();
                 }
             } else {
-                Random random = new Random();
-                currentPosition = random.nextInt(listID.size());
-                text.setText(activity.getEngWord(listID.get(currentPosition)));
-                setTextButtons(buttons);
+                setTimer();
             }
         } else {
-            Random random = new Random();
-            currentPosition = random.nextInt(listID.size());
-            text.setText(activity.getEngWord(listID.get(currentPosition)));
-            setTextButtons(buttons);
+            setTimer();
         }
+
+    }
+
+    private void setTimer(){
+        Timer timer=new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if(listID.size()==1 && listID.size()==0){
+                    for(Button btn:buttons){
+                        Drawable btnDrw=getContext().getResources().getDrawable(R.drawable.custom_button);
+                        btn.setBackground(btnDrw);
+                    }
+                }
+                if(listID.size()!=0){
+                    for(Button btn:buttons){
+                        Drawable btnDrw=getContext().getResources().getDrawable(R.drawable.custom_button);
+                        btn.setBackground(btnDrw);
+                    }
+                    changeText();
+                }
+            }
+        },1000);
+    }
+
+    private void changeText(){
+        Random random = new Random();
+        currentPosition = random.nextInt(listID.size());
+        text.setText(activity.getEngWord(listID.get(currentPosition)));
+        setTextButtons(buttons);
     }
 
     private void init(View view) {
