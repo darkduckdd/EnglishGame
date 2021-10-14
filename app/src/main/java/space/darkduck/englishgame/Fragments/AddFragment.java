@@ -32,7 +32,7 @@ public class AddFragment extends Fragment {
                     @Override
                     public CharSequence filter(CharSequence source, int start,
                                                int end, Spanned dest, int dstart, int dend) {
-                        if (source.equals("")) { // for backspace
+                        if (source.equals("")) {
                             return source;
                         }
                         if (source.toString().matches("[a-zA-Z]+")) {
@@ -47,7 +47,7 @@ public class AddFragment extends Fragment {
                     @Override
                     public CharSequence filter(CharSequence source, int start,
                                                int end, Spanned dest, int dstart, int dend) {
-                        if (source.equals("")) { // for backspace
+                        if (source.equals("")) {
                             return source;
                         }
                         if (source.toString().matches("[а-яА-Я]+")) {
@@ -58,7 +58,7 @@ public class AddFragment extends Fragment {
                 }
         });
         saveButton.setOnClickListener((v)->{
-            fragmentSendDataListener.onSendTwoWord(engInput.getText().toString(),rusInput.getText().toString());
+            fragmentSendDataListener.onSendTwoWord(engInput.getText().toString().toLowerCase(),rusInput.getText().toString().toLowerCase());
             engInput.setText("");
             rusInput.setText("");
         });

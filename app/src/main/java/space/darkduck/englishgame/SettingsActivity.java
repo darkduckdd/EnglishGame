@@ -24,9 +24,6 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        SettingsFragment settingsFragment = new SettingsFragment();
-        PreferenceManager preferenceManager = settingsFragment.getPreferenceManager();
-
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {

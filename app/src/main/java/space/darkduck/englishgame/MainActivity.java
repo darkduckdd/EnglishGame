@@ -34,24 +34,19 @@ import space.darkduck.englishgame.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
     private Button addButton,playButton,statisticButton;
-    private DatabaseHelper databaseHelper;
-    private static String channelId = "Game channel";
     private AlarmManager alarmManager;
     private Calendar calendar;
     private PendingIntent pendingIntent;
 
     private void init(){
-        databaseHelper=new DatabaseHelper(MainActivity.this);
         addButton = findViewById(R.id.addButton);
         playButton = findViewById(R.id.playButton);
         statisticButton=findViewById(R.id.showStatistics);
-
         createNotificationChannel();
         addButton.setOnClickListener((v) -> {
             Intent intent = new Intent(MainActivity.this, AddActivity.class);
             startActivity(intent);
         });
-
         playButton.setOnClickListener((v)->{
             Intent intent = new Intent(MainActivity.this, PlayActivity.class);
             startActivity(intent);

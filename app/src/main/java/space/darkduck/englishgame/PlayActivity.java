@@ -33,7 +33,7 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     private int progressForBar = 0;
     private ArrayList<Integer> listOneIDS = new ArrayList<>(), listTwoIDS = new ArrayList<>(), listThreeIDS = new ArrayList<>(), listProgresses = new ArrayList<>();
     private boolean isCompletedTwo = false, isCompletedThree = false;
-
+    private StatisticsActivity statisticsActivity;
     private void init() {
         pbHorizontal = findViewById(R.id.progressBar);
         pbHorizontal.setProgress(progressForBar);
@@ -52,6 +52,7 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
         cursorLOne.close();
         cursorLTwo.close();
         cursorLThree.close();
+        statisticsActivity=new StatisticsActivity();
     }
 
     @Override
@@ -128,6 +129,10 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
         myDB.updateProgress(String.valueOf(id), myDB.getProgress(String.valueOf(id)) + scoreAddPoint);
     }
 
+    public void updateWordProgress(int id,int value) {
+        myDB.updateProgress(String.valueOf(id), myDB.getProgress(String.valueOf(id)) + value);
+    }
+
     public void changeFragment(Fragment fragment) {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.containerFL, fragment);
@@ -170,15 +175,12 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                 break;
             case NextLevel:
                 if (listTwoIDS.size() == 0 && listThreeIDS.size() == 0) {
-                    Statistics.setLessonCompleted();
                     changeFragment(fragmentLessonEnd);
                 } else if (listTwoIDS.size() != 0) {
                     if (isCompletedTwo && listThreeIDS.size() == 0) {
-                        Statistics.setLessonCompleted();
                         changeFragment(fragmentLessonEnd);
                     } else if (isCompletedTwo && listThreeIDS.size() != 0) {
                         if (isCompletedThree) {
-                            Statistics.setLessonCompleted();
                             changeFragment(fragmentLessonEnd);
                         } else {
                             progressForBar = 0;

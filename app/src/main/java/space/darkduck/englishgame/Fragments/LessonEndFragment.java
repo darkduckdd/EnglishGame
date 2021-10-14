@@ -27,7 +27,6 @@ public class LessonEndFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view =inflater.inflate(R.layout.fragment_lesson_end, container, false);
         Button menuButton=view.findViewById(R.id.menuButton);
         textView=view.findViewById(R.id.endTextView);

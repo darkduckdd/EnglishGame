@@ -16,7 +16,6 @@ public class FileWorker {
         this.context=context;
     }
 
-
     public ArrayList<String> readEngFile(){
         BufferedReader reader = null;
         try {

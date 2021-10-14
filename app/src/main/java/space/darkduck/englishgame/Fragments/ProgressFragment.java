@@ -24,7 +24,6 @@ import space.darkduck.englishgame.R;
 public class ProgressFragment extends Fragment {
     private OnFragmentListener fragmentSendDataListener;
     private PlayActivity activity;
-    private TextView text;
     private RecyclerView recyclerView;
     private Button nextLevelButton;
     private ProgressAdapter progressAdapter;
@@ -41,7 +40,6 @@ public class ProgressFragment extends Fragment {
     }
     private void init(View view){
         activity = (PlayActivity) getActivity();
-        text = view.findViewById(R.id.wordLearned);
         recyclerView=view.findViewById(R.id.recyclerView);
         nextLevelButton=view.findViewById(R.id.nextLevelButton);
         addWordToList();

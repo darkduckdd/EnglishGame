@@ -37,7 +37,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public static String getColumnEngWord(){return columnEngWord;}
     public static String getColumnRusWord(){return  columnRusWord;}
-    public static String getColumnProgress(){return  columnProgress;}
 
     public Cursor getAllData(){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -71,7 +70,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public Cursor getWordsForLevelOne() {
-        Log.d("TESTAD",maxWords+":");
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("select Id from Dictionary where Progress >= ? and Progress< ? order by random() limit "+maxWords, new String[]{String.valueOf(minPoint),String.valueOf(minPointsForLevelTwo)});
         return cursor;

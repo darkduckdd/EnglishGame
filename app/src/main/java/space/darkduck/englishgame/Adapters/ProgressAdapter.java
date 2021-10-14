@@ -54,8 +54,8 @@ public class ProgressAdapter extends RecyclerView.Adapter<ProgressAdapter.Progre
         }
     }
     private void startCountAnimation(ProgressBar pb,int start,int end,ImageView image) {
-        ValueAnimator animator = ValueAnimator.ofInt(start, end); //0 is min number, 600 is max number
-        animator.setDuration(3000); //Duration is in milliseconds
+        ValueAnimator animator = ValueAnimator.ofInt(start, end);
+        animator.setDuration(3000);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             public void onAnimationUpdate(ValueAnimator animation) {
                 pb.setProgress(Integer.parseInt(animation.getAnimatedValue().toString()));

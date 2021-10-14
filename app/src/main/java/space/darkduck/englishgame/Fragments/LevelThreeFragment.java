@@ -18,7 +18,7 @@ import space.darkduck.englishgame.LevelResult;
 import space.darkduck.englishgame.OnFragmentListener;
 import space.darkduck.englishgame.PlayActivity;
 import space.darkduck.englishgame.R;
-import space.darkduck.englishgame.Statistics;
+import space.darkduck.englishgame.StatisticsActivity;
 
 public class LevelThreeFragment extends Fragment {
 
@@ -30,6 +30,7 @@ public class LevelThreeFragment extends Fragment {
     private ArrayList<Integer> listID = new ArrayList<>();
     private int currentPosition;
     private int progressValue;
+    private StatisticsActivity statisticsActivity;
 
     private void init(View view) {
         activity = (PlayActivity) getActivity();
@@ -44,6 +45,7 @@ public class LevelThreeFragment extends Fragment {
             checkClick();
         });
         progressValue=100/ DatabaseHelper.getWordLimit();
+        statisticsActivity=new StatisticsActivity();
     }
 
     @Override
@@ -72,10 +74,9 @@ public class LevelThreeFragment extends Fragment {
     private void checkClick() {
         if (edit.getText().toString().equals(activity.getEngWord(listID.get(currentPosition)))) {
             activity.addProgressBar(progressValue);
-            activity.updateWordProgress(listID.get(currentPosition));
+            activity.updateWordProgress(listID.get(currentPosition),40);
             if (activity.getProgress(listID.get(currentPosition)) >= 100) {
                 listID.remove(currentPosition);
-                Statistics.setWordsLearned();
                 if (listID.size() == 0) {
                     fragmentSendDataListener.onResultLevel(LevelResult.LevelThreeSuccess);
                 } else if (listID.size() == 1) {

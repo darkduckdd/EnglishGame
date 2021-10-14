@@ -55,18 +55,18 @@ public class LevelTwoFragment extends Fragment {
     }
 
     void checkClick(Button button) {
-        for(Button bton:buttons){
-            if(bton.getText().equals(activity.getRusWord(listID.get(currentPosition)))) {
+        for (Button bton : buttons) {
+            if (bton.getText().equals(activity.getRusWord(listID.get(currentPosition)))) {
                 Drawable drawable = getContext().getResources().getDrawable(R.drawable.right_click);
                 bton.setBackground(drawable);
-            }else {
+            } else {
                 Drawable drw = getContext().getResources().getDrawable(R.drawable.error_click);
                 bton.setBackground(drw);
             }
         }
         if (button.getText().equals(activity.getRusWord(listID.get(currentPosition)))) {
             activity.addProgressBar(progressValue);
-            activity.updateWordProgress(listID.get(currentPosition));
+            activity.updateWordProgress(listID.get(currentPosition), 40);
             if (activity.getProgress(listID.get(currentPosition)) >= 60) {
                 listID.remove(currentPosition);
                 if (listID.size() == 0) {
@@ -85,32 +85,31 @@ public class LevelTwoFragment extends Fragment {
         } else {
             setTimer();
         }
-
     }
 
-    private void setTimer(){
-        Timer timer=new Timer();
+    private void setTimer() {
+        Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if(listID.size()==1 && listID.size()==0){
-                    for(Button btn:buttons){
-                        Drawable btnDrw=getContext().getResources().getDrawable(R.drawable.custom_button);
+                if (listID.size() == 1 && listID.size() == 0) {
+                    for (Button btn : buttons) {
+                        Drawable btnDrw = getContext().getResources().getDrawable(R.drawable.custom_button);
                         btn.setBackground(btnDrw);
                     }
                 }
-                if(listID.size()!=0){
-                    for(Button btn:buttons){
-                        Drawable btnDrw=getContext().getResources().getDrawable(R.drawable.custom_button);
+                if (listID.size() != 0) {
+                    for (Button btn : buttons) {
+                        Drawable btnDrw = getContext().getResources().getDrawable(R.drawable.custom_button);
                         btn.setBackground(btnDrw);
                     }
                     changeText();
                 }
             }
-        },1000);
+        }, 1000);
     }
 
-    private void changeText(){
+    private void changeText() {
         Random random = new Random();
         currentPosition = random.nextInt(listID.size());
         text.setText(activity.getEngWord(listID.get(currentPosition)));
@@ -136,7 +135,7 @@ public class LevelTwoFragment extends Fragment {
                 checkClick(btn);
             });
         }
-        progressValue=100/ DatabaseHelper.getWordLimit();
+        progressValue = 100 / DatabaseHelper.getWordLimit();
     }
 
     @Override
