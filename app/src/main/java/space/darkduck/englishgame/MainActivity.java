@@ -38,33 +38,36 @@ public class MainActivity extends AppCompatActivity {
     private Calendar calendar;
     private PendingIntent pendingIntent;
 
-    private void init(){
+    private void init() {
         addButton = findViewById(R.id.addButton);
         playButton = findViewById(R.id.playButton);
-        statisticButton=findViewById(R.id.showStatistics);
+        statisticButton = findViewById(R.id.showStatistics);
+
         createNotificationChannel();
         addButton.setOnClickListener((v) -> {
             Intent intent = new Intent(MainActivity.this, AddActivity.class);
             startActivity(intent);
         });
-        playButton.setOnClickListener((v)->{
+
+        playButton.setOnClickListener((v) -> {
             Intent intent = new Intent(MainActivity.this, PlayActivity.class);
             startActivity(intent);
         });
-        statisticButton.setOnClickListener((v)->{
+        statisticButton.setOnClickListener((v) -> {
             Intent intent = new Intent(MainActivity.this, StatisticsActivity.class);
             startActivity(intent);
         });
-        SharedPreferences preferences= PreferenceManager.getDefaultSharedPreferences(this);
-        String wordCount=preferences.getString("wordCount","10");
-        String time=preferences.getString("setTime","12:00");
-        String[] timeSplit=time.split(":");
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String wordCount = preferences.getString("wordCount", "10");
+        String time = preferences.getString("setTime", "12:00");
+        String[] timeSplit = time.split(":");
         DatabaseHelper.setWordLimit(Integer.parseInt(wordCount));
-        calendar=Calendar.getInstance();
-        calendar.set(Calendar.HOUR_OF_DAY,Integer.parseInt(timeSplit[0]));
-        calendar.set(Calendar.MINUTE,Integer.parseInt(timeSplit[1]));
-        calendar.set(Calendar.SECOND,0);
-        calendar.set(Calendar.MILLISECOND,0);
+        calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeSplit[0]));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(timeSplit[1]));
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
         setAlarm();
     }
 
@@ -84,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, NotificationReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
-        alarmManager.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
     @Override
@@ -94,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         String wordCount=preferences.getString("wordCount","10");
         DatabaseHelper.setWordLimit(Integer.parseInt(wordCount));
         String time=preferences.getString("setTime","12:00");
+        Log.d("TESTAD",time);
         String[] timeSplit=time.split(":");
         calendar.set(Calendar.HOUR_OF_DAY,Integer.parseInt(timeSplit[0]));
         calendar.set(Calendar.MINUTE,Integer.parseInt(timeSplit[1]));

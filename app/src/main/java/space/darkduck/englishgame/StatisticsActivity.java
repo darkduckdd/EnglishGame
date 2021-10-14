@@ -17,8 +17,6 @@ public class StatisticsActivity extends AppCompatActivity {
     public static final String preferencesStatistics = "statisticsPreferences";
     public static final String preferencesLessonCount = "lessonCount";
     public static final String preferencesWordLearned = "wordLearned";
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
     int lessonCount,wordLearned,maxWord,leftWord;
 
     private void init() {
