@@ -13,6 +13,8 @@
         <space.darkduck.englishgame.TimePreference
             android:key="setTime"
             android:title="Set time notification"
+            app:defaultValue="true"
+            android:summary=""
             android:defaultValue="12:00" />
     </PreferenceCategory>
 </PreferenceScreen>

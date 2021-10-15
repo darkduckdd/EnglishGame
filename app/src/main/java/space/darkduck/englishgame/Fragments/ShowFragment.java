@@ -1,4 +1,4 @@
-package space.darkduck.englishgame;
+package space.darkduck.englishgame.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import java.util.ArrayList;
 import space.darkduck.englishgame.Adapters.WordAdapter;
+import space.darkduck.englishgame.AddActivity;
+import space.darkduck.englishgame.OnFragmentListener;
+import space.darkduck.englishgame.R;
 
 public class ShowFragment extends Fragment {
     private AddActivity activity;
