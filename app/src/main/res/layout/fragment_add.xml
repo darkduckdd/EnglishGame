@@ -4,52 +4,84 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.AddFragment"
     android:background="@color/colorBackground"
-    android:padding="30dp">
+    android:padding="10dp"
+    tools:context=".Fragments.AddFragment">
 
-    <EditText
-        android:id="@+id/engInput"
-        android:layout_width="350dp"
-        android:layout_height="81dp"
-        android:layout_marginBottom="340dp"
-        android:ems="10"
-        android:hint="English Word"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.557"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp"
         app:layout_constraintStart_toStartOf="parent"
-        android:focusableInTouchMode="true"
-        android:isScrollContainer="false"/>
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:layout_marginTop="36dp"
-        android:text="Add"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.95"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rusInput"
-        android:background="@drawable/custom_button"
-        android:textAllCaps="false"
-        android:textColor="@color/colorText"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/rusInput"
-        android:layout_width="350dp"
-        android:layout_height="80dp"
-        android:layout_marginTop="44dp"
-        android:ems="10"
-        android:hint="Translate Word"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.557"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/engInput"
-        android:focusableInTouchMode="true"
-        android:isScrollContainer="false"/>
+            <EditText
+                android:id="@+id/engInput"
+                android:layout_width="match_parent"
+                android:layout_height="83dp"
+                android:layout_weight="10"
+                android:focusableInTouchMode="true"
+                android:hint="English Word"
+                android:imeOptions="actionSend|flagNoEnterAction"
+                android:inputType="text"
+                android:isScrollContainer="false"
+                android:padding="5dp"
+                android:scrollbars="vertical" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionSearchButtonEng"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginStart="3dp"
+                android:layout_weight="0"
+                android:clickable="true"
+                android:src="@drawable/ic_baseline_search_24" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/rusInput"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_weight="10"
+                android:focusableInTouchMode="true"
+                android:hint="Translate Word"
+                android:inputType="textPersonName"
+                android:isScrollContainer="false"
+                android:padding="5dp" />
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/floatingActionSearchButtonRus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="3dp"
+                android:clickable="true"
+                android:src="@drawable/ic_baseline_search_24" />
+
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionSaveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|end"
+            android:layout_margin="3dp"
+            android:clickable="true"
+            android:src="@drawable/ic_check_24"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

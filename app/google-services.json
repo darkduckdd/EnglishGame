@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "392909689938",
+    "project_id": "englishgame-e55de",
+    "storage_bucket": "englishgame-e55de.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:392909689938:android:dad0596c1d1e5521e8fb8b",
+        "android_client_info": {
+          "package_name": "space.darkduck.englishgame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "392909689938-e2usv62o29vglqm9l8vpkod4tajuo8ue.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJAPMH9Ii0muig5y10cH6YcLNGsosi-Pc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "392909689938-e2usv62o29vglqm9l8vpkod4tajuo8ue.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
