@@ -77,6 +77,7 @@ public class LevelThreeFragment extends Fragment {
             activity.updateWordProgress(listID.get(currentPosition),40);
             if (activity.getProgress(listID.get(currentPosition)) >= 100) {
                 listID.remove(currentPosition);
+                activity.increaseWordCount();
                 if (listID.size() == 0) {
                     fragmentSendDataListener.onResultLevel(LevelResult.LevelThreeSuccess);
                 } else if (listID.size() == 1) {

@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
@@ -99,7 +98,7 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
     private void addIDToList(Cursor cursor, ArrayList<Integer> list) {
         if (cursor.moveToFirst()) {
             do {
-                int id = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.getColumnId()));
+                int id = cursor.getInt(cursor.getColumnIndex(DatabaseHelper.getWordColumnId()));
                 list.add(id);
             } while (cursor.moveToNext());
         }
@@ -144,6 +143,10 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
         pbHorizontal.setProgress(progressForBar);
     }
 
+    public void increaseWordCount(){
+        myDB.increaseWordCompleted();
+    }
+
     @Override
     public void onResultLevel(LevelResult result) {
         switch (result) {
@@ -175,12 +178,15 @@ public class PlayActivity extends AppCompatActivity implements OnFragmentListene
                 break;
             case NextLevel:
                 if (listTwoIDS.size() == 0 && listThreeIDS.size() == 0) {
+                    myDB.increaseLessonCount();
                     changeFragment(fragmentLessonEnd);
                 } else if (listTwoIDS.size() != 0) {
                     if (isCompletedTwo && listThreeIDS.size() == 0) {
+                        myDB.increaseLessonCount();
                         changeFragment(fragmentLessonEnd);
                     } else if (isCompletedTwo && listThreeIDS.size() != 0) {
                         if (isCompletedThree) {
+                            myDB.increaseLessonCount();
                             changeFragment(fragmentLessonEnd);
                         } else {
                             progressForBar = 0;

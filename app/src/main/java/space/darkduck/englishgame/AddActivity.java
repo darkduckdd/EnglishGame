@@ -48,7 +48,7 @@ public class AddActivity extends AppCompatActivity implements OnFragmentListener
     private void addDataToList(Cursor cursor){
         cursor.moveToFirst();
         do {
-            listID.add(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.getColumnId())));
+            listID.add(cursor.getInt(cursor.getColumnIndex(DatabaseHelper.getWordColumnId())));
             listEngWord.add(cursor.getString(cursor.getColumnIndex(DatabaseHelper.getColumnEngWord())));
             listRusWord.add(cursor.getString(cursor.getColumnIndex(DatabaseHelper.getColumnRusWord())));
         }while (cursor.moveToNext());

@@ -14,9 +14,6 @@ public class StatisticsActivity extends AppCompatActivity {
     private TextView maxWordText, wordLearnedText, wordLeftText, lessonCompletedText;
     private DatabaseHelper myDB;
     private FloatingActionButton floatingActionButton;
-    public static final String preferencesStatistics = "statisticsPreferences";
-    public static final String preferencesLessonCount = "lessonCount";
-    public static final String preferencesWordLearned = "wordLearned";
     int lessonCount,wordLearned,maxWord,leftWord;
 
     private void init() {
@@ -31,6 +28,10 @@ public class StatisticsActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+        lessonCount= myDB.getLessonCount();
+        wordLearned= myDB.getWordCompleted();
+        maxWord= myDB.getMaxId();
+        leftWord=maxWord-wordLearned;
     }
 
     @Override
@@ -38,5 +39,9 @@ public class StatisticsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_statistics);
         init();
+        maxWordText.setText(maxWordText.getText()+":"+maxWord);
+        wordLearnedText.setText(wordLearnedText.getText()+":"+wordLearned);
+        lessonCompletedText.setText(lessonCompletedText.getText()+":"+lessonCount);
+        wordLeftText.setText(wordLeftText.getText()+":"+leftWord);
     }
 }
