@@ -40,15 +40,16 @@
 
     <Button
         android:id="@+id/nextLevelButton"
-        android:layout_width="106dp"
-        android:layout_height="wrap_content"
+        android:layout_width="130dp"
+        android:layout_height="61dp"
+        android:layout_gravity="end"
         android:layout_margin="5dp"
+        android:background="@drawable/custom_button"
         android:gravity="clip_horizontal|center"
         android:padding="12dp"
         android:paddingTop="12dp"
-        android:background="@drawable/custom_button"
+        android:text="Далее"
         android:textAllCaps="false"
-        android:textColor="@color/colorText"
-        android:text="Далее" />
+        android:textColor="@color/colorText" />
 
 </LinearLayout>

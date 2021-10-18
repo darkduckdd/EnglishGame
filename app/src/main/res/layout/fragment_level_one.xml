@@ -7,71 +7,58 @@
     tools:context=".Fragments.LevelOneFragment">
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="304dp"
-        android:layout_height="66dp"
-        android:layout_marginTop="48dp"
-        android:gravity="center"
-        android:text="Level 1"
-        android:textSize="48sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="343dp"
+        android:layout_height="137dp"
         android:layout_marginStart="121dp"
-        android:layout_marginTop="264dp"
+        android:layout_marginTop="160dp"
         android:layout_marginEnd="159dp"
+        android:fontFamily="sans-serif-condensed-medium"
         android:text="@string/hello_blank_fragment"
         android:textSize="34sp"
-        android:fontFamily="sans-serif-condensed-medium"
         app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.398"
+        app:layout_constraintHorizontal_bias="0.344"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/mistakeButton"
-        android:layout_width="120dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="92dp"
+        android:layout_width="166dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="112dp"
         android:background="@drawable/custom_button"
+        android:text="Не знаю"
         android:textAllCaps="false"
         android:textColor="@color/colorText"
-        android:text="Не знаю"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/nextButton"
-        android:layout_width="120dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="92dp"
+        android:layout_width="166dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="112dp"
         android:background="@drawable/custom_button"
+        android:text="Далее"
         android:textAllCaps="false"
         android:textColor="@color/colorText"
-        android:text="Далее"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         tools:ignore="DuplicateClickableBoundsCheck" />
 
     <Button
         android:id="@+id/rightButton"
-        android:layout_width="120dp"
-        android:layout_height="70dp"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="92dp"
+        android:layout_width="166dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="112dp"
         android:background="@drawable/custom_button"
+        android:text="Знаю"
         android:textAllCaps="false"
         android:textColor="@color/colorText"
-        android:text="Знаю"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
